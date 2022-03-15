@@ -334,7 +334,7 @@ const CreateRecord = () => {
                     <input
                       id="linkInput"
                       type="text"
-                      placeholder="Adicione o link do documento"
+                      placeholder="Adicione o link do documento, deve começar com 'https://'"
                       onChange={(event) => setLink(event.target.value)}
                       value={link}
                     />

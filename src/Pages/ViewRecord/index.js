@@ -351,7 +351,9 @@ const ViewRecord = () => {
             <div class="link">
               <h3>Link:&nbsp;</h3>
               <h3 id="link">
-                {link ? link : 'Nenhum link para esse registro'}
+                <a href={link} target="_blank">
+                  {link ? link : 'Nenhum link para esse registro'}
+                </a>
               </h3>
             </div>
             <div class="description">
