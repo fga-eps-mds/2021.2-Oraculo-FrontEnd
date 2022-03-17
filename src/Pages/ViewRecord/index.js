@@ -36,7 +36,8 @@ import { ModalReopenProcess } from '../../Components/ModalDoubleCheck'
 const ViewRecord = () => {
   const naoCadastrada = 'Informação não cadastrada'
   const { id } = useParams()
-  const [sector, setSector] = useState('')
+  const [department, setDepartment] = useState("");
+  const [departments, setDepartments] = useState([]);
   const [forward, setForward] = useState([])
   const [forwardData, setForwardData] = useState('')
 
@@ -106,10 +107,18 @@ const ViewRecord = () => {
         setTags(recordTags)
       }
     }
+    async function fetchDepartments() {
+      const departmentsList = await getDepartments();
+      setDepartments(departmentsList);
+      if(department === "") {
+        setDepartment(departmentsList[0].id);
+      }
+    }
 
-    fetchTagsData()
-    fetchRecordData()
-  }, [buttonModalConfirmForward])
+    fetchTagsData();
+    fetchRecordData();
+    fetchDepartments();
+  }, [buttonModalConfirmForward]);
 
   const getDate = () => {
     var data = new Date()
@@ -172,11 +181,11 @@ const ViewRecord = () => {
       id: id,
       forwarded_by: userEmail,
       origin_id: userSectorNum,
-      destination_id: sector,
-    }
-    await forwardRecordInfo(toast, forwardRecInfo)
-    setButtonModalConfirmForward(false)
-  }
+      destination_id: department,
+    };
+    await forwardRecordInfo(toast, forwardRecInfo);
+    setButtonModalConfirmForward(false);
+  };
 
   const handleClickModalWhite = () => {
     setButtonModal(false)
@@ -394,7 +403,8 @@ const ViewRecord = () => {
           </button>
 
           <DropDownButton
-            onChangeOpt={(event) => setSector(event.target.value)}
+            departments={departments}
+            onChangeOpt={(event) => setDepartment(event.target.value)}
           />
 
           <span>Tags:</span>
