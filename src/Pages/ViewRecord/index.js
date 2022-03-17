@@ -125,7 +125,7 @@ const ViewRecord = () => {
   const handleButtonProcessReopen = () => {
     setbuttonModalReopen(true);
   };
-
+  // used only in closed
   const handleClickModalBlueReopen = async () => {
     //check if the reason has been added
     if (reason) {
@@ -312,7 +312,6 @@ const ViewRecord = () => {
                 class="info-icon"
               />
             </div>
-
             <div>
               <h3>Localidade:&nbsp;</h3>
               <h3>{city ? city : "Erro"}</h3>
@@ -389,7 +388,7 @@ const ViewRecord = () => {
             <TagsList id={id} />
           </div>
 
-          <a className="historic" href="/historico-registro">
+          <a className="historic" href="/historico-registro/:id">
             Histórico de alterações
           </a>
         </StyledDivInfoProcess>
