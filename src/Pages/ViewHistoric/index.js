@@ -76,7 +76,42 @@ function ViewHistoric() {
                     name: user.name,
                 };
                 
-            }
+            }else if (history.closed_by != null) {
+                const dateDoneReg = formatedDate(history.closed_at);
+                const infoUserDone = await getUserByEmail(history.closed_by);
+                newForward = {
+                  setor: " ",
+                  setorOrigin: history.origin_name,
+                  defaultText: "Registro Concluído",
+                  date: dateDoneReg,
+                  dateForward: " ",
+                  name: infoUserDone.name,
+                };
+              } else if (history.reopened_by != null) {
+                const dateReopenReg = formatedDate(history.reopened_at);
+                const infoUserDone = await getUserByEmail(history.reopened_by);
+                newForward = {
+                  setor: " ",
+                  setorOrigin: " ",
+                  defaultText: "Registro reaberto",
+                  reason: "Motivo:",
+                  reasonText: history.reason,
+                  date: dateReopenReg,
+                  dateForward: " ",
+                  name: infoUserDone.name,
+                };
+              } else {
+                const infoUser = await getUserByEmail(history.created_by);
+                const createDate = formatedDate(history.created_at);
+                newForward = {
+                  setor: " ",
+                  setorOrigin: history.origin_name,
+                  defaultText: "Registro criado em: ",
+                  date: createDate,
+                  dateForward: " ",
+                  name: infoUser.name,
+                };
+              }
             return newForwardHistory;
         };
         saveHistoryData();
