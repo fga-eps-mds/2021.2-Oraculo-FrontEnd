@@ -57,6 +57,7 @@ const ViewRecord = () => {
   const [tags, setTags] = useState([])
   const [reason, setReason] = useState('')
   const [physicalObject, setPhysicalObject] = useState(false)
+  const [link, setLink] = useState('')
   const [buttonModalConfirmForward, setButtonModalConfirmForward] = useState('')
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
@@ -80,6 +81,7 @@ const ViewRecord = () => {
       setDocumentContactInfo(record.contact_info)
       setDocumentType(record.document_type)
       setPhysicalObject(record.have_physical_object)
+      setLink(record.link)
       const user = await getInfoUser(toast)
       setUserName(user.name)
       setUserEmail(user.email)
@@ -351,6 +353,14 @@ const ViewRecord = () => {
             <div>
               <h3>Acompanha objeto físico:&nbsp;</h3>
               <h3 id="physicalObject">{physicalObject ? 'Sim' : 'Não'}</h3>
+            </div>
+            <div class="link">
+              <h3>Link:&nbsp;</h3>
+              <h3 id="link">
+                <a href={link} target="_blank">
+                  {link ? link : 'Nenhum link para esse registro'}
+                </a>
+              </h3>
             </div>
             <div class="description">
               <h3>Descrição:&nbsp;</h3>

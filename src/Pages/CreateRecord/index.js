@@ -46,6 +46,8 @@ const CreateRecord = () => {
   const [showTagModal, setShowTagModal] = useState(false)
   const [tags, setTags] = useState({})
   const [physicalObject, setPhysicalObject] = useState(false)
+  const [link, setLink] = useState('')
+
   useEffect(() => {
     async function getUser() {
       const user = await getInfoUser(toast)
@@ -82,6 +84,7 @@ const CreateRecord = () => {
         .filter(([key, value]) => value.checked)
         .map(([key, value]) => key),
       have_physical_object: physicalObject,
+      link: link,
     }
     console.log(record, 'antes')
     // envia request para criar registro no banco
@@ -97,6 +100,7 @@ const CreateRecord = () => {
     setSeiNumber('')
     setReceiptForm('')
     setContactInfo('')
+    setLink('')
   }
 
   return (
@@ -336,7 +340,16 @@ const CreateRecord = () => {
                       </div>
                     </button>
                   </div>
-
+                  <div className="form-div">
+                    <h1>Link de documento</h1>
+                    <input
+                      id="linkInput"
+                      type="text"
+                      placeholder="Adicione o link do documento, deve começar com 'https://'"
+                      onChange={(event) => setLink(event.target.value)}
+                      value={link}
+                    />
+                  </div>
                   <StyledButtonsDiv>
                     <StyledCancelButton
                       type="button"
