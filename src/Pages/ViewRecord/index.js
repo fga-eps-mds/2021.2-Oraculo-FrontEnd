@@ -56,6 +56,7 @@ const ViewRecord = () => {
   const [userSectorNum, setUserSectorNum] = useState('')
   const [tags, setTags] = useState([])
   const [reason, setReason] = useState('')
+  const [physicalObject, setPhysicalObject] = useState(false)
   const [link, setLink] = useState('')
   const [buttonModalConfirmForward, setButtonModalConfirmForward] = useState('')
   const [buttonModal, setButtonModal] = useState('')
@@ -79,6 +80,7 @@ const ViewRecord = () => {
       setDocumentNumber(record.document_number)
       setDocumentContactInfo(record.contact_info)
       setDocumentType(record.document_type)
+      setPhysicalObject(record.have_physical_object)
       setLink(record.link)
       const user = await getInfoUser(toast)
       setUserName(user.name)
@@ -347,6 +349,10 @@ const ViewRecord = () => {
               <h3 id="contact-info">
                 {documentContactInfo ? documentContactInfo : naoCadastrada}
               </h3>
+            </div>
+            <div>
+              <h3>Acompanha objeto físico:&nbsp;</h3>
+              <h3 id="physicalObject">{physicalObject ? 'Sim' : 'Não'}</h3>
             </div>
             <div class="link">
               <h3>Link:&nbsp;</h3>

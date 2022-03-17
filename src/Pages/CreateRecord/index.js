@@ -45,6 +45,7 @@ const CreateRecord = () => {
   const [createdBy, setCreatedBy] = useState('')
   const [showTagModal, setShowTagModal] = useState(false)
   const [tags, setTags] = useState({})
+  const [physicalObject, setPhysicalObject] = useState(false)
   const [link, setLink] = useState('')
 
   useEffect(() => {
@@ -82,6 +83,7 @@ const CreateRecord = () => {
       tags: Object.entries(tags)
         .filter(([key, value]) => value.checked)
         .map(([key, value]) => key),
+      have_physical_object: physicalObject,
       link: link,
     }
     console.log(record, 'antes')
@@ -308,6 +310,15 @@ const CreateRecord = () => {
                       placeholder="contato@email.com"
                       onChange={(event) => setContactInfo(event.target.value)}
                       value={contactInfo}
+                    />
+                  </div>
+                  <div className="form-div">
+                    <h1>Acompanha objeto físico</h1>
+                    <input
+                      type="checkbox"
+                      onChange={(event) => {
+                        setPhysicalObject(event.target.checked)
+                      }}
                     />
                   </div>
                   <div className="form-div">
