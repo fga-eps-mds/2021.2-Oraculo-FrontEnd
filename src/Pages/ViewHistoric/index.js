@@ -1,42 +1,22 @@
 import ForwardSector from "../../Components/ForwardSector";
 import React, {  useState , useEffect} from "react";
 import { useParams } from "react-router";
-//import ReactDOM from "react-dom";
-//import { matchPath } from "react-router-dom"
-import SectionMovBlock from "../../Components/SectionMovBlock";
 import { getRecordHistory , getUserByEmail} from "../../Services/Axios/processService";
 import toast from "react-hot-toast";
 import {
     getDepartments,
     getInfoUser,
 } from "../../Services/Axios/profileService";
+import HeaderWithButtons from "../../Components/HeaderWithButtons";
 
 function ViewHistoric() {
     const [forwardHistory, setForwardHistory] = useState([]);
-    
-    //function BlogPost() {
-        // Desconstruímos da URL a varíavel idPost
-    //    const { idPost } = useParams();
-    //    return <div>ID do post: {idPost}</div>;
-    //  }
     const  {id}  = useParams();
-    console.log(id)
-    
-    // {
-    //     const { location } = useRouter()
-    //     const { pathname } = location
-      
-    //     const pattern = `(.*)?${path}`
-    //     const match = matchPath(pathname, { path: pattern }) || {}
-      
-    //    return match.params
-    //  };
 
     useEffect(() => {
         // deve salvar historico no forwardHistory 
         async function saveHistoryData(){
-            const responseHistory = await getRecordHistory(toast, 1);
-            //console.log(responseHistory);//! remove
+            const responseHistory = await getRecordHistory(toast, id);
             const arrayForwardHistory = await Promise.all(
                 responseHistory.map((history) => organizeHistory(history))
             );
@@ -45,16 +25,12 @@ function ViewHistoric() {
         
         // deve organizar um historico para seu respectivo formato
         async function organizeHistory(history){
-
             var newForwardHistory = []
             const email = history.forwarded_by;
-            console.log(email);
-            // caso seja 
+            
             if(email != null){
                 const originSecID = history.origin_id;
-                
                 const destinationID = history.destination_id;
-                // Todo: remover req daqui
                 const allDepartments = await getDepartments();
                 console.log(allDepartments)
 
@@ -79,52 +55,44 @@ function ViewHistoric() {
             }else if (history.closed_by != null) {
                 const dateDoneReg = formatedDate(history.closed_at);
                 const infoUserDone = await getUserByEmail(history.closed_by);
-                newForward = {
-                  setor: " ",
-                  setorOrigin: history.origin_name,
-                  defaultText: "Registro Concluído",
-                  date: dateDoneReg,
-                  dateForward: " ",
-                  name: infoUserDone.name,
-                };
-              } else if (history.reopened_by != null) {
+                    newForwardHistory = {
+                    setor: " ",
+                    setorOrigin: history.origin_name,
+                    defaultText: "Registro Concluído",
+                    date: dateDoneReg,
+                    dateForward: " ",
+                    name: infoUserDone.name,
+                    };
+            } else if (history.reopened_by != null) {
                 const dateReopenReg = formatedDate(history.reopened_at);
                 const infoUserDone = await getUserByEmail(history.reopened_by);
-                newForward = {
-                  setor: " ",
-                  setorOrigin: " ",
-                  defaultText: "Registro reaberto",
-                  reason: "Motivo:",
-                  reasonText: history.reason,
-                  date: dateReopenReg,
-                  dateForward: " ",
-                  name: infoUserDone.name,
+                    newForwardHistory = {
+                    setor: " ",
+                    setorOrigin: " ",
+                    defaultText: "Registro reaberto",
+                    reason: "Motivo:",
+                    reasonText: history.reason,
+                    date: dateReopenReg,
+                    dateForward: " ",
+                    name: infoUserDone.name,
                 };
-              } else {
+            } else {
                 const infoUser = await getUserByEmail(history.created_by);
                 const createDate = formatedDate(history.created_at);
-                newForward = {
-                  setor: " ",
-                  setorOrigin: history.origin_name,
-                  defaultText: "Registro criado em: ",
-                  date: createDate,
-                  dateForward: " ",
-                  name: infoUser.name,
+                newForwardHistory = {
+                    setor: " ",
+                    setorOrigin: history.origin_name,
+                    defaultText: "Registro criado em: ",
+                    date: createDate,
+                    dateForward: " ",
+                    name: infoUser.name,
                 };
-              }
+            }
             return newForwardHistory;
         };
         saveHistoryData();
-        // ? deve estar aqui?
-        const getDate = () => {
-            var data = new Date();
-            var dia = String(data.getDate()).padStart(2, "0");
-            var mes = String(data.getMonth() + 1).padStart(2, "0");
-            var ano = data.getFullYear();
-            return dia + "/" + mes + "/" + ano;
-        };
     });
-    
+    // data formatada
     const formatedDate = (infoDate) => {
         const dataDone = new Date(infoDate);
         return (
@@ -135,10 +103,9 @@ function ViewHistoric() {
             dataDone.getFullYear()
         );
     };
-    
-    
     return (
         <div>
+            <HeaderWithButtons />
             <ForwardSector forward={forwardHistory}/>
         </div>
         

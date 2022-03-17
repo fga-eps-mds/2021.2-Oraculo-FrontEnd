@@ -296,6 +296,10 @@ const ViewRecord = () => {
     history.push(`/editar-registro/${id}`);
     window.location.reload();
   }
+  function handleViewHistoric() {
+    history.push(`/historico-registro/${id}`);
+    window.location.reload();
+  }
 
   return (
     <>
@@ -353,8 +357,7 @@ const ViewRecord = () => {
               <h3>{description ? description : "Erro"}</h3>
             </div>
           </StyledInfoDiv>
-          <ForwardSector forward={forward} />
-
+          {/* <ForwardSector forward={forward} /> */}
           <StyledDivButtons>
             <GenericWhiteButton
               title="Voltar"
@@ -388,7 +391,7 @@ const ViewRecord = () => {
             <TagsList id={id} />
           </div>
 
-          <a className="historic" href="/historico-registro/:id">
+          <a className="historic" onClick={handleViewHistoric}>
             Histórico de alterações
           </a>
         </StyledDivInfoProcess>
