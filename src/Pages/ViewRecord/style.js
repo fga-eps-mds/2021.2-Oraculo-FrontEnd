@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { fonts, colors, radius } from "../../style";
+import styled from 'styled-components'
+import { fonts, colors, radius } from '../../style'
 
 const StyledDivSupProcess = styled.div`
   display: flex;
   background-color: ${colors.background};
-`;
+`
 const StyledDivInfoProcess = styled.div`
   width: 35.5%;
   height: 90vh;
@@ -75,7 +75,7 @@ const StyledDivInfoProcess = styled.div`
     margin-top: 2rem;
     padding: 0.7rem 3rem;
   }
-`;
+`
 
 const StyledDivShowProcess = styled.div`
   width: 64.5%;
@@ -110,7 +110,7 @@ const StyledDivShowProcess = styled.div`
       width: 1.3rem;
     }
   }
-`;
+`
 
 const StyledDivButtons = styled.div`
   position: absolute;
@@ -119,7 +119,7 @@ const StyledDivButtons = styled.div`
   button {
     margin-left: 1rem;
   }
-`;
+`
 
 const StyledInfoDiv = styled.div`
   width: 98%;
@@ -174,7 +174,10 @@ const StyledInfoDiv = styled.div`
   #contact-info {
     text-transform: none;
   }
-`;
+  #link {
+    text-transform: none;
+  }
+`
 
 export {
   StyledDivInfoProcess,
@@ -182,4 +185,4 @@ export {
   StyledDivSupProcess,
   StyledDivButtons,
   StyledInfoDiv,
-};
+}
