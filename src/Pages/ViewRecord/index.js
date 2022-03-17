@@ -110,8 +110,9 @@ const ViewRecord = () => {
     async function fetchDepartments() {
       const departmentsList = await getDepartments();
       setDepartments(departmentsList);
-      if(department === "")
+      if(department === "") {
         setDepartment(departmentsList[0].id);
+      }
     }
 
     fetchTagsData();
