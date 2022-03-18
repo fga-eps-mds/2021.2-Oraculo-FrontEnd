@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { FaPlus, FaRegFileAlt } from "react-icons/fa";
-import HeaderWithButtons from "../../Components/HeaderWithButtons";
-import { history } from "../../history";
-import {
-  editRecord,
-  getProcessByID,
-} from "../../Services/Axios/processService";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import pt from "date-fns/locale/pt-BR";
-import { federativeUnits } from "../../Constants/federativeUnits";
-import { useParams } from "react-router";
-import { getInfoUser } from "../../Services/Axios/profileService";
+import React, { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { FaPlus, FaRegFileAlt } from 'react-icons/fa'
+import HeaderWithButtons from '../../Components/HeaderWithButtons'
+import { history } from '../../history'
+import { editRecord, getProcessByID } from '../../Services/Axios/processService'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import pt from 'date-fns/locale/pt-BR'
+import { federativeUnits } from '../../Constants/federativeUnits'
+import { useParams } from 'react-router'
+import { getInfoUser } from '../../Services/Axios/profileService'
 import {
   StyledBlueRectangle,
   StyledButtonsDiv,
@@ -24,85 +21,87 @@ import {
   StyledProcessDiv,
   StyledTitle,
   StyledWhiteRectangle,
-} from "../CreateRecord/styles";
-import { getRecordTagColors } from "../../Services/Axios/tagsService";
-import { TagModal } from "../../Components/AddTagDialog";
+} from '../CreateRecord/styles'
+import { getRecordTagColors } from '../../Services/Axios/tagsService'
+import { TagModal } from '../../Components/AddTagDialog'
 
 const EditRecord = () => {
   useEffect(() => {
     // if user is not logged, go back to login screen
     async function getUser() {
-      const user = await getInfoUser(toast);
+      const user = await getInfoUser(toast)
       if (!user) {
-        history.push("/login");
+        history.push('/login')
       }
     }
-    getUser();
-  }, []);
+    getUser()
+  }, [])
 
   // Convert dd/mm/yyyy para Date()
   const convertDate = (dateBR) => {
-    const dateUS = dateBR.split("/");
-    return new Date(dateUS[2], dateUS[1] - 1, dateUS[0]);
-  };
+    const dateUS = dateBR.split('/')
+    return new Date(dateUS[2], dateUS[1] - 1, dateUS[0])
+  }
 
-  const { id } = useParams();
-  const [inclusionDate, setInclusionDate] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [requester, setRequester] = useState("");
-  const [documentType, setDocumentType] = useState("");
-  const [documentNumber, setDocumentNumber] = useState("");
-  const [documentDate, setDocumentDate] = useState("");
-  const [documentDescription, setDocumentDescription] = useState("");
-  const [seiNumber, setSeiNumber] = useState("");
-  const [receiptForm, setReceiptForm] = useState("");
-  const [contactInfo, setContactInfo] = useState("");
-  const [tags, setTags] = useState({});
-  const [showTagModal, setShowTagModal] = useState(false);
+  const { id } = useParams()
+  const [inclusionDate, setInclusionDate] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
+  const [requester, setRequester] = useState('')
+  const [documentType, setDocumentType] = useState('')
+  const [documentNumber, setDocumentNumber] = useState('')
+  const [documentDate, setDocumentDate] = useState('')
+  const [documentDescription, setDocumentDescription] = useState('')
+  const [seiNumber, setSeiNumber] = useState('')
+  const [receiptForm, setReceiptForm] = useState('')
+  const [contactInfo, setContactInfo] = useState('')
+  const [tags, setTags] = useState({})
+  const [showTagModal, setShowTagModal] = useState(false)
+  const [link, setLink] = useState('')
 
   window.onload = async function () {
-    const originalRecord = await getProcessByID(id, toast);
-    const getTagsApi = await getRecordTagColors(id);
+    const originalRecord = await getProcessByID(id, toast)
+    const getTagsApi = await getRecordTagColors(id)
 
-    const newTags = {};
+    const newTags = {}
     if (getTagsApi[0] === 200) {
-      console.log(getTagsApi);
+      console.log(getTagsApi)
       getTagsApi[1].forEach((t) => {
-        newTags[t.id] = { color: t.color, checked: true };
-      });
-      setTags(newTags);
+        newTags[t.id] = { color: t.color, checked: true }
+      })
+      setTags(newTags)
     }
 
-    setInclusionDate(originalRecord.inclusion_date);
+    setInclusionDate(originalRecord.inclusion_date)
 
-    originalRecord.city ? setCity(originalRecord.city) : setCity("-");
-    originalRecord.state ? setState(originalRecord.state) : setState("-");
+    originalRecord.city ? setCity(originalRecord.city) : setCity('-')
+    originalRecord.state ? setState(originalRecord.state) : setState('-')
     originalRecord.requester
       ? setRequester(originalRecord.requester)
-      : setRequester("-");
+      : setRequester('-')
     originalRecord.document_type
       ? setDocumentType(originalRecord.document_type)
-      : setDocumentType("-");
+      : setDocumentType('-')
     originalRecord.document_number
       ? setDocumentNumber(originalRecord.document_number)
-      : setDocumentNumber("-");
+      : setDocumentNumber('-')
     originalRecord.document_date
       ? setDocumentDate(convertDate(originalRecord.document_date))
-      : setDocumentDate("-");
+      : setDocumentDate('-')
     originalRecord.description
       ? setDocumentDescription(originalRecord.description)
-      : setDocumentDescription("-");
+      : setDocumentDescription('-')
     originalRecord.sei_number
       ? setSeiNumber(originalRecord.sei_number)
-      : setSeiNumber("-");
+      : setSeiNumber('-')
     originalRecord.receipt_form
       ? setReceiptForm(originalRecord.receipt_form)
-      : setReceiptForm("-");
+      : setReceiptForm('-')
     originalRecord.contact_info
       ? setContactInfo(originalRecord.contact_info)
-      : setContactInfo("-");
-  };
+      : setContactInfo('-')
+    originalRecord.link ? setLink(originalRecord.link) : setLink('-')
+  }
 
   async function handleClick(event) {
     const record = {
@@ -121,9 +120,9 @@ const EditRecord = () => {
       tags: Object.entries(tags)
         .filter(([key, value]) => value.checked)
         .map(([key, value]) => key),
-    };
+    }
 
-    await editRecord(record, id, toast);
+    await editRecord(record, id, toast)
   }
 
   return (
@@ -227,7 +226,7 @@ const EditRecord = () => {
                     dateFormat="dd/MM/yyyy"
                     maxDate={new Date()}
                     onChange={(event) => {
-                      setDocumentDate(event);
+                      setDocumentDate(event)
                     }}
                     customInput={<StyledDatePicker />}
                   />
@@ -280,26 +279,36 @@ const EditRecord = () => {
                   <div className="form-div">
                     <h1>Tags</h1>
                     <button type="button" onClick={() => setShowTagModal(true)}>
-                      <div style={{ display: "flex" }}>
+                      <div style={{ display: 'flex' }}>
                         {Object.entries(tags).map(([key, value]) => {
                           return (
                             value.checked && (
                               <div
                                 style={{
-                                  height: "1rem",
-                                  width: "1rem",
-                                  border: "1px solid black",
-                                  borderRadius: "50%",
+                                  height: '1rem',
+                                  width: '1rem',
+                                  border: '1px solid black',
+                                  borderRadius: '50%',
                                   backgroundColor: value.color,
-                                  marginRight: "0.5rem",
+                                  marginRight: '0.5rem',
                                 }}
                               />
                             )
-                          );
+                          )
                         })}
                         <FaPlus />
                       </div>
                     </button>
+                  </div>
+                  <div className="form-div">
+                    <h1>Link de documento</h1>
+                    <input
+                      id="linkInput"
+                      type="text"
+                      placeholder="Adicione o link do documento"
+                      onChange={(event) => setLink(event.target.value)}
+                      value={link}
+                    />
                   </div>
                   <StyledButtonsDiv>
                     <StyledCancelButton
@@ -320,7 +329,7 @@ const EditRecord = () => {
         <Toaster />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default EditRecord;
+export default EditRecord
