@@ -2,6 +2,10 @@
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/mit)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2021.2-Oraculo-FrontEnd&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fga-eps-mds_2021.2-Oraculo-FrontEnd)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2021.2-Oraculo-FrontEnd&metric=coverage)](https://sonarcloud.io/summary/new_code?id=fga-eps-mds_2021.2-Oraculo-FrontEnd)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2021.2-Oraculo-FrontEnd&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=fga-eps-mds_2021.2-Oraculo-FrontEnd)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2021.2-Oraculo-FrontEnd&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=fga-eps-mds_2021.2-Oraculo-FrontEnd)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2021.2-Oraculo-FrontEnd&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=fga-eps-mds_2021.2-Oraculo-FrontEnd)
 
 Esse repositório tem o propósito de apresentar um interface web simples e intuitiva do projeto [`Oráculo`](https://github.com/fga-eps-mds/2021.1-Oraculo).
 
