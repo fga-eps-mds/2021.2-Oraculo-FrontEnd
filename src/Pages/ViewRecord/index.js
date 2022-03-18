@@ -36,8 +36,8 @@ import { ModalReopenProcess } from '../../Components/ModalDoubleCheck'
 const ViewRecord = () => {
   const naoCadastrada = 'Informação não cadastrada'
   const { id } = useParams()
-  const [department, setDepartment] = useState("");
-  const [departments, setDepartments] = useState([]);
+  const [department, setDepartment] = useState('')
+  const [departments, setDepartments] = useState([])
   const [forward, setForward] = useState([])
   const [forwardData, setForwardData] = useState('')
 
@@ -108,17 +108,17 @@ const ViewRecord = () => {
       }
     }
     async function fetchDepartments() {
-      const departmentsList = await getDepartments();
-      setDepartments(departmentsList);
-      if(department === "") {
-        setDepartment(departmentsList[0].id);
+      const departmentsList = await getDepartments()
+      setDepartments(departmentsList)
+      if (department === '') {
+        setDepartment(departmentsList[0].id)
       }
     }
 
-    fetchTagsData();
-    fetchRecordData();
-    fetchDepartments();
-  }, [buttonModalConfirmForward]);
+    fetchTagsData()
+    fetchRecordData()
+    fetchDepartments()
+  }, [buttonModalConfirmForward])
 
   const getDate = () => {
     var data = new Date()
@@ -133,9 +133,8 @@ const ViewRecord = () => {
   }
 
   const handleButtonProcessReopen = () => {
-
-    setbuttonModalReopen(true);
-  };
+    setbuttonModalReopen(true)
+  }
   // used only in closed
 
   const handleClickModalBlueReopen = async () => {
@@ -184,10 +183,10 @@ const ViewRecord = () => {
       forwarded_by: userEmail,
       origin_id: userSectorNum,
       destination_id: department,
-    };
-    await forwardRecordInfo(toast, forwardRecInfo);
-    setButtonModalConfirmForward(false);
-  };
+    }
+    await forwardRecordInfo(toast, forwardRecInfo)
+    setButtonModalConfirmForward(false)
+  }
 
   const handleClickModalWhite = () => {
     setButtonModal(false)
@@ -309,10 +308,22 @@ const ViewRecord = () => {
     window.location.reload()
   }
   function handleViewHistoric() {
-    history.push(`/historico-registro/${id}`);
-    window.location.reload();
+    history.push(`/historico-registro/${id}`)
+    window.location.reload()
   }
-
+  function hasLink() {
+    if (link)
+      return (
+        <div class="link">
+          <h3>Link:&nbsp;</h3>
+          <h3 id="link">
+            <a href={link} target="_blank">
+              {link}
+            </a>
+          </h3>
+        </div>
+      )
+  }
   return (
     <>
       <HeaderWithButtons />
@@ -368,14 +379,7 @@ const ViewRecord = () => {
               <h3>Acompanha objeto físico:&nbsp;</h3>
               <h3 id="physicalObject">{physicalObject ? 'Sim' : 'Não'}</h3>
             </div>
-            <div class="link">
-              <h3>Link:&nbsp;</h3>
-              <h3 id="link">
-                <a href={link} target="_blank">
-                  {link ? link : 'Nenhum link para esse registro'}
-                </a>
-              </h3>
-            </div>
+            {hasLink()}
             <div class="description">
               <h3>Descrição:&nbsp;</h3>
               <h3>{description ? description : 'Erro'}</h3>
