@@ -10,7 +10,8 @@ import {
 import HeaderWithButtons from "../../Components/HeaderWithButtons";
 
 function ViewHistoric() {
-    const [forwardHistory, setForwardHistory] = useState([]);
+    const [forwardHistory, setForwardHistory] = useState([])
+    const [continueFlag, setContinueFlag] = useState(true)
     const  {id}  = useParams();
 
     useEffect(() => {
@@ -91,7 +92,8 @@ function ViewHistoric() {
             return newForwardHistory;
         };
         saveHistoryData();
-    });
+        setContinueFlag(false);
+    }, [continueFlag]);
     // data formatada
     const formatedDate = (infoDate) => {
         const dataDone = new Date(infoDate);
