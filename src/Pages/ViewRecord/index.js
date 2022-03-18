@@ -133,8 +133,10 @@ const ViewRecord = () => {
   }
 
   const handleButtonProcessReopen = () => {
-    setbuttonModalReopen(true)
-  }
+
+    setbuttonModalReopen(true);
+  };
+  // used only in closed
 
   const handleClickModalBlueReopen = async () => {
     //check if the reason has been added
@@ -306,6 +308,10 @@ const ViewRecord = () => {
     history.push(`/editar-registro/${id}`)
     window.location.reload()
   }
+  function handleViewHistoric() {
+    history.push(`/historico-registro/${id}`);
+    window.location.reload();
+  }
 
   return (
     <>
@@ -322,7 +328,6 @@ const ViewRecord = () => {
                 class="info-icon"
               />
             </div>
-
             <div>
               <h3>Localidade:&nbsp;</h3>
               <h3>{city ? city : 'Erro'}</h3>
@@ -376,8 +381,7 @@ const ViewRecord = () => {
               <h3>{description ? description : 'Erro'}</h3>
             </div>
           </StyledInfoDiv>
-          <ForwardSector forward={forward} />
-
+          {/* <ForwardSector forward={forward} /> */}
           <StyledDivButtons>
             <GenericWhiteButton
               title="Voltar"
@@ -412,7 +416,7 @@ const ViewRecord = () => {
             <TagsList id={id} />
           </div>
 
-          <a className="historic" href="/historico-registro">
+          <a className="historic" onClick={handleViewHistoric}>
             Histórico de alterações
           </a>
         </StyledDivInfoProcess>

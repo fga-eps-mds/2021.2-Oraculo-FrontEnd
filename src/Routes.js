@@ -18,6 +18,7 @@ import ViewAllUsers from "./Pages/ViewAllUsers";
 import EditRecord from "./Pages/EditRecord";
 import EditDepartment from "./Pages/EditDepartment";
 import ViewAllTags from "./Pages/ViewAllTags";
+import ViewHistoric from "./Pages/ViewHistoric";
 
 const PrivateRoutes = ({ component: Component, ...prop }) => (
   <Route
@@ -68,6 +69,7 @@ const Routes = () => (
         component={() => <EditDepartment />}
       />
       <PrivateRoutes path="/visualizar-tags" component={() => <ViewAllTags />} />
+      <PrivateRoutes path="/historico-registro/:id" component={() => <ViewHistoric />} />
       <Route exact path="/" component={() => <LoginScreen />} />
     </Switch>
   </BrowserRouter>
