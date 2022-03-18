@@ -1,7 +1,7 @@
 # 2021.2-Oraculo-Frontend
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/mit)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2021-1-PC-GO-Frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=fga-eps-mds_2021-1-PC-GO-Frontend)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2021.2-Oraculo-FrontEnd&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fga-eps-mds_2021.2-Oraculo-FrontEnd)
 
 Esse repositório tem o propósito de apresentar um interface web simples e intuitiva do projeto [`Oráculo`](https://github.com/fga-eps-mds/2021.1-Oraculo).
 
@@ -46,5 +46,5 @@ a URL completa (host e porta) dos microsserviços de profile e de registros, res
 
 Esta aplicação faz conexão e é dependente das APIs para funcionar corretamente. As APIs correspondentes são:
 
-- [API de Profile](https://github.com/fga-eps-mds/2021.1-Oraculo-Profile)
-- [API de Registros](https://github.com/fga-eps-mds/2021.1-Oraculo-Registros)
+- [API de Profile](https://github.com/fga-eps-mds/2021.2-Oraculo-Profile)
+- [API de Registros](https://github.com/fga-eps-mds/2021.2-Oraculo-Registros)
