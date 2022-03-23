@@ -86,7 +86,7 @@ const CreateRecord = () => {
         .map(([key, value]) => key),
       have_physical_object: physicalObject,
       link: link,
-      keyWord,
+      key_words: keyWord,
     }
     console.log(record, 'antes')
     // envia request para criar registro no banco
