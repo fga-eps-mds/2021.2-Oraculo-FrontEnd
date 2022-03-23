@@ -102,14 +102,10 @@ const EditRecord = () => {
     originalRecord.contact_info
       ? setContactInfo(originalRecord.contact_info)
       : setContactInfo('-')
-    originalRecord.link ? setLink(originalRecord.link) : setLink('-')
-    originalRecord.keyWord
-      ? setKeyWord(originalRecord.keyWord)
-      : setKeyWord('-')
+    originalRecord.link ? setLink(originalRecord.link) : setLink('')
+    originalRecord.keyWord ? setKeyWord(originalRecord.keyWord) : setKeyWord('')
 
-    originalRecord.have_physical_object
-      ? setPhysicalObject(originalRecord.have_physical_object)
-      : setPhysicalObject(originalRecord.have_physical_object)
+    setPhysicalObject(originalRecord.have_physical_object)
   }
 
   async function handleClick(event) {
