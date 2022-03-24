@@ -63,12 +63,10 @@ const EditRecord = () => {
 
   window.onload = async function () {
     const originalRecord = await getProcessByID(id, toast)
-    console.log(originalRecord)
     const getTagsApi = await getRecordTagColors(id)
 
     const newTags = {}
     if (getTagsApi[0] === 200) {
-      console.log(getTagsApi)
       getTagsApi[1].forEach((t) => {
         newTags[t.id] = { color: t.color, checked: true }
       })

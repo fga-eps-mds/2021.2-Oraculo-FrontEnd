@@ -88,7 +88,6 @@ const CreateRecord = () => {
       link: link,
       key_words: keyWord,
     }
-    console.log(record, 'antes')
     // envia request para criar registro no banco
     await createRecord(record, toast)
 
@@ -164,7 +163,6 @@ const CreateRecord = () => {
                         )
                         return
                       }
-                      console.error(`info ${data}, ${status}`)
                       if (status === 200 && data.found === true) {
                         // Exibe mensagem de alerta
                         toast((t) => (
