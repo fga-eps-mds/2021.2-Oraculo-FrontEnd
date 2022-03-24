@@ -356,7 +356,7 @@ const CreateRecord = () => {
                     <input
                       id="keyWordInput"
                       type="text"
-                      placeholder="Insira as palavras chave do documento"
+                      placeholder="Insira as palavras chave separadas por vírgula"
                       onChange={(event) => setKeyWord(event.target.value)}
                       value={keyWord}
                     />
