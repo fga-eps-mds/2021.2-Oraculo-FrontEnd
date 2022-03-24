@@ -55,6 +55,8 @@ const CreateRecord = () => {
         history.push('/login')
       }
       setCreatedBy(user.email)
+      setRequester(user.name)
+      setContactInfo(user.email)
     }
 
     getUser()
