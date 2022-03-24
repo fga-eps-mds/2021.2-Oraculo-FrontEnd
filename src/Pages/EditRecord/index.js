@@ -128,6 +128,7 @@ const EditRecord = () => {
         .map(([key, value]) => key),
       link: link,
       have_physical_object: physicalObject,
+      key_words: keyWord
     }
 
     await editRecord(record, id, toast)
