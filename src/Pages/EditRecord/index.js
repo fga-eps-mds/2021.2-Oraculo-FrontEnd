@@ -63,6 +63,7 @@ const EditRecord = () => {
 
   window.onload = async function () {
     const originalRecord = await getProcessByID(id, toast)
+    console.log(originalRecord)
     const getTagsApi = await getRecordTagColors(id)
 
     const newTags = {}
@@ -103,7 +104,7 @@ const EditRecord = () => {
       ? setContactInfo(originalRecord.contact_info)
       : setContactInfo('-')
     originalRecord.link ? setLink(originalRecord.link) : setLink('')
-    originalRecord.keyWord ? setKeyWord(originalRecord.keyWord) : setKeyWord('')
+    originalRecord.key_words ? setKeyWord(originalRecord.key_words) : setKeyWord('')
 
     setPhysicalObject(originalRecord.have_physical_object)
   }
