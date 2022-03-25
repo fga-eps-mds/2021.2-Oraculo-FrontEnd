@@ -15,7 +15,7 @@ import { getInfoUser } from '../../Services/Axios/profileService'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import pt from 'date-fns/locale/pt-BR'
-import AddTagDialog, { TagModal } from '../../Components/AddTagDialog'
+import AddTagDialog, { TagModal } from '../../Components/AddTagDialog';
 
 import {
   CircleDiv,

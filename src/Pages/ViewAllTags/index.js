@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import HeaderWithButtons from "../../Components/HeaderWithButtons";
+import MainButton from "../../Components/MainButton";
+import CreateTagModal from "../../Components/CreateTagModal"
 import toast, { Toaster } from "react-hot-toast";
 import {
+  ButtonDiv,
   StyledTitle,
-  StyledBottom,
   StyledOrganizeButtons,
   StyledBigButton,
   StyledSearchBarSize,
@@ -21,6 +23,7 @@ const ViewAllTags = () => {
   const [tags, setAllTags] = useState([]);
   /* Estado para termo de procura */
   const [searchTerm, setSearchTerm] = useState("");
+  const [createTagModal, setCreateTagModal] = useState(false);
 
   async function fetchTags() {
     try {
@@ -35,6 +38,11 @@ const ViewAllTags = () => {
     }
   }
 
+  function onTagModalAction() {
+    setCreateTagModal(false);
+    fetchTags();
+  }
+
   console.log("A" + tags);
 
   window.onload = function () {
@@ -43,6 +51,7 @@ const ViewAllTags = () => {
 
   return (
     <>
+      {createTagModal && <CreateTagModal onAction={onTagModalAction}/>}
       <HeaderWithButtons />
       <StyledPage>
         <StyledTitle>Tags</StyledTitle>
@@ -60,6 +69,9 @@ const ViewAllTags = () => {
               />
             </StyledSearchBar>
           </StyledSearchBarSize>
+          <ButtonDiv>
+            <MainButton onClick={() => setCreateTagModal(true)} title={"Criar Tag"} />
+          </ButtonDiv>
         </StyledTop>
         <StyledBottomTags>
           <StyledOrganizeButtons>
