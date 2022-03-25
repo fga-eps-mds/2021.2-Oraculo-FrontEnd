@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
+import CreateModal from "../CreateTagModal";
 import {
   CircleColor,
   ColorPickerDiv,
@@ -39,8 +40,6 @@ const TagModal = ({ onVisibleChanged, addTags, tagsObj }) => {
   const [allTags, setAllTags] = useState([]);
   const [isAdmin, setAdmin] = useState(false);
   const [openColorPicker, setOpenColorPicker] = useState(false);
-  const [color, setColor] = useState("#FFF");
-  const [nameTag, setNameTag] = useState("");
   const [editColor, setEditColor] = useState("");
   const [editNameTag, setEditNameTag] = useState("");
   const [editId, setEditId] = useState();
@@ -109,9 +108,16 @@ const TagModal = ({ onVisibleChanged, addTags, tagsObj }) => {
     editTag(editId, editNameTag, editColor, toast);
   }
 
+  // After close or confirm action, closes Create Modal 
+  // and opens AllModal
+  function onCreateTagAction() {
+    setCreateModal(false);
+    setAllModal(true);
+  }
+
   useEffect(() => {
     fetchUserData();
-  }, [color, editModal]);
+  }, [allModal, editModal]);
 
   return (
     <div>
@@ -174,54 +180,7 @@ const TagModal = ({ onVisibleChanged, addTags, tagsObj }) => {
       </Modal>
 
       {/* Add new modal to create a new tag */}
-      <Modal isOpen={createModal} contentLabel="Nova tag" style={modalStyle}>
-        <StyledCreateTag>
-          <h1>Nova Tag</h1>
-          <p>Nome:</p>
-          <div className="input-section">
-            <input
-              type="text"
-              value={nameTag}
-              onChange={(event) => setNameTag(event.target.value)}
-            />
-            <div>
-              <p>Cor:</p>
-              <CircleColor
-                style={{ cursor: "pointer", backgroundColor: color }}
-                onClick={() => setOpenColorPicker(!openColorPicker)}
-              />
-            </div>
-          </div>
-          {openColorPicker ? (
-            <ColorPickerDiv>
-              <ChromePicker
-                color={color}
-                onChangeComplete={(color) => setColor(color.hex)}
-              />
-            </ColorPickerDiv>
-          ) : null}
-          <div className="endOfPageDiv">
-            {/* Button to return to another modal */}
-            <GenericWhiteButton
-              title="Cancelar"
-              onClick={() => {
-                setAllModal(true);
-                setCreateModal(false);
-                setNameTag("");
-                setColor("");
-              }}
-            />
-            <GenericBlueButton
-              title="Criar"
-              onClick={() => {
-                createTag(nameTag, color, toast);
-                setNameTag("");
-                setColor("");
-              }}
-            />
-          </div>
-        </StyledCreateTag>
-      </Modal>
+      {createModal && <CreateModal onAction={onCreateTagAction} />}
 
       {/* Add new modal to edit a tag */}
       <Modal isOpen={editModal} contentLabel="Editar tag" style={modalStyle}>
