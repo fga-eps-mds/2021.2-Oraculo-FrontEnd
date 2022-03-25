@@ -13,7 +13,6 @@ import GenericWhiteButton from "../GenericWhiteButton";
 import { Checkbox } from "antd";
 import { FaPen } from "react-icons/fa";
 import {
-  createTag,
   editTag,
   getAllTags,
 } from "../../Services/Axios/processService";
@@ -108,8 +107,7 @@ const TagModal = ({ onVisibleChanged, addTags, tagsObj }) => {
     editTag(editId, editNameTag, editColor, toast);
   }
 
-  // After close or confirm action, closes Create Modal 
-  // and opens AllModal
+  // After close or confirm action, closes Create Modal and opens AllModal
   function onCreateTagAction() {
     setCreateModal(false);
     setAllModal(true);

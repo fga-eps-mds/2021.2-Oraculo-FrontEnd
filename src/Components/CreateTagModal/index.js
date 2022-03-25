@@ -32,7 +32,7 @@ const CreateTagModal = ({ onAction }) => {
   const [openColorPicker, setOpenColorPicker] = useState(false);
   const [color, setColor] = useState("#FFF");
   const [nameTag, setNameTag] = useState("");
-  const [modal, setModal] = useState(true);
+  const [modal] = useState(true);
 
   const addTag = async ()=> {
     await createTag(nameTag, color, toast)
@@ -68,7 +68,7 @@ const CreateTagModal = ({ onAction }) => {
             <ColorPickerDiv>
               <ChromePicker
                 color={color}
-                onChangeComplete={(color) => setColor(color.hex)}
+                onChangeComplete={(c) => setColor(c.hex)}
               />
             </ColorPickerDiv>
           ) : null}

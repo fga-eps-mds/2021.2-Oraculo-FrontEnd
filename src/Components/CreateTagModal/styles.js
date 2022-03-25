@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, fonts, radius } from "../../style";
+import { fonts } from "../../style";
 
 export const CircleColor = styled.div`
   width: 4rem;
