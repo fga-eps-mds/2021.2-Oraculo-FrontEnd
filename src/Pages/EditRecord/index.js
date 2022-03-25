@@ -58,6 +58,8 @@ const EditRecord = () => {
   const [tags, setTags] = useState({})
   const [showTagModal, setShowTagModal] = useState(false)
   const [link, setLink] = useState('')
+  const [keyWord, setKeyWord] = useState('')
+  const [physicalObject, setPhysicalObject] = useState(false)
 
   window.onload = async function () {
     const originalRecord = await getProcessByID(id, toast)
@@ -65,7 +67,6 @@ const EditRecord = () => {
 
     const newTags = {}
     if (getTagsApi[0] === 200) {
-      console.log(getTagsApi)
       getTagsApi[1].forEach((t) => {
         newTags[t.id] = { color: t.color, checked: true }
       })
@@ -100,7 +101,10 @@ const EditRecord = () => {
     originalRecord.contact_info
       ? setContactInfo(originalRecord.contact_info)
       : setContactInfo('-')
-    originalRecord.link ? setLink(originalRecord.link) : setLink('-')
+    originalRecord.link ? setLink(originalRecord.link) : setLink('')
+    originalRecord.key_words ? setKeyWord(originalRecord.key_words) : setKeyWord('')
+
+    setPhysicalObject(originalRecord.have_physical_object)
   }
 
   async function handleClick(event) {
@@ -120,6 +124,9 @@ const EditRecord = () => {
       tags: Object.entries(tags)
         .filter(([key, value]) => value.checked)
         .map(([key, value]) => key),
+      link: link,
+      have_physical_object: physicalObject,
+      key_words: keyWord
     }
 
     await editRecord(record, id, toast)
@@ -277,6 +284,16 @@ const EditRecord = () => {
                     />
                   </div>
                   <div className="form-div">
+                    <h1>Acompanha objeto físico</h1>
+                    <input
+                      type="checkbox"
+                      onChange={(event) => {
+                        setPhysicalObject(event.target.checked)
+                      }}
+                      checked={physicalObject}
+                    />
+                  </div>
+                  <div className="form-div">
                     <h1>Tags</h1>
                     <button type="button" onClick={() => setShowTagModal(true)}>
                       <div style={{ display: 'flex' }}>
@@ -308,6 +325,16 @@ const EditRecord = () => {
                       placeholder="Adicione o link do documento"
                       onChange={(event) => setLink(event.target.value)}
                       value={link}
+                    />
+                  </div>
+                  <div className="form-div">
+                    <h1>Palavras-chave</h1>
+                    <input
+                      id="keyWordInput"
+                      type="text"
+                      placeholder="Insira as palavras chave separadas por vírgula"
+                      onChange={(event) => setKeyWord(event.target.value)}
+                      value={keyWord}
                     />
                   </div>
                   <StyledButtonsDiv>
