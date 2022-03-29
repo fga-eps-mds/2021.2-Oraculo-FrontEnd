@@ -59,6 +59,7 @@ const ViewRecord = () => {
   const [reason, setReason] = useState('')
   const [physicalObject, setPhysicalObject] = useState(false)
   const [link, setLink] = useState('')
+  const [keyWord, setKeyWord] = useState('')
   const [buttonModalConfirmForward, setButtonModalConfirmForward] = useState('')
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
@@ -83,6 +84,7 @@ const ViewRecord = () => {
       setDocumentType(record.document_type)
       setPhysicalObject(record.have_physical_object)
       setLink(record.link)
+      setKeyWord(record.key_words)
       const user = await getInfoUser(toast)
       setUserName(user.name)
       setUserEmail(user.email)
@@ -383,6 +385,10 @@ const ViewRecord = () => {
             <div class="description">
               <h3>Descrição:&nbsp;</h3>
               <h3>{description ? description : 'Erro'}</h3>
+            </div>
+            <div class="Palavras-chave">
+              <h3>palavra-chave:&nbsp;</h3>
+              <h3> {keyWord ? keyWord : naoCadastrada}</h3>
             </div>
           </StyledInfoDiv>
           {/* <ForwardSector forward={forward} /> */}

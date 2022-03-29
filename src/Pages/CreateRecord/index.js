@@ -15,7 +15,7 @@ import { getInfoUser } from '../../Services/Axios/profileService'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import pt from 'date-fns/locale/pt-BR'
-import AddTagDialog, { TagModal } from '../../Components/AddTagDialog'
+import AddTagDialog, { TagModal } from '../../Components/AddTagDialog';
 
 import {
   CircleDiv,
@@ -47,6 +47,7 @@ const CreateRecord = () => {
   const [tags, setTags] = useState({})
   const [physicalObject, setPhysicalObject] = useState(false)
   const [link, setLink] = useState('')
+  const [keyWord, setKeyWord] = useState('')
 
   useEffect(() => {
     async function getUser() {
@@ -55,6 +56,8 @@ const CreateRecord = () => {
         history.push('/login')
       }
       setCreatedBy(user.email)
+      setRequester(user.name)
+      setContactInfo(user.email)
     }
 
     getUser()
@@ -85,8 +88,8 @@ const CreateRecord = () => {
         .map(([key, value]) => key),
       have_physical_object: physicalObject,
       link: link,
+      key_words: keyWord,
     }
-    console.log(record, 'antes')
     // envia request para criar registro no banco
     await createRecord(record, toast)
 
@@ -101,6 +104,7 @@ const CreateRecord = () => {
     setReceiptForm('')
     setContactInfo('')
     setLink('')
+    setKeyWord('')
   }
 
   return (
@@ -161,7 +165,6 @@ const CreateRecord = () => {
                         )
                         return
                       }
-                      console.error(`info ${data}, ${status}`)
                       if (status === 200 && data.found === true) {
                         // Exibe mensagem de alerta
                         toast((t) => (
@@ -348,6 +351,16 @@ const CreateRecord = () => {
                       placeholder="Adicione o link do documento, deve começar com 'https://'"
                       onChange={(event) => setLink(event.target.value)}
                       value={link}
+                    />
+                  </div>
+                  <div className="form-div">
+                    <h1>Palavras-chave</h1>
+                    <input
+                      id="keyWordInput"
+                      type="text"
+                      placeholder="Insira as palavras chave separadas por vírgula"
+                      onChange={(event) => setKeyWord(event.target.value)}
+                      value={keyWord}
                     />
                   </div>
                   <StyledButtonsDiv>

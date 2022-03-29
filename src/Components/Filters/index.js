@@ -71,6 +71,10 @@ const recordFields = {
     label: "Tag",
     value: "",
   },
+  key_words: {
+    label: "Palavra-chave",
+    value: "",
+  },
 };
 
 const RenderFilters = ({ handleWhere }) => {
