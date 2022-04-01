@@ -65,7 +65,7 @@ const ViewRecord = () => {
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
   const [buttonModalReopen, setbuttonModalReopen] = useState(false)
-  const [wasReceived, setWasReceived] = useState(false)
+  const [wasReceived, setWasReceived] = useState(true)
   const [receivedId, setReceivedId] = useState(0)
 
   useEffect(() => {
@@ -96,8 +96,8 @@ const ViewRecord = () => {
       record.receivements.forEach(receivement => {
         if(receivement.department_id === user.departments[0].id){
           setReceivedId(receivement.id);
-          if(receivement.received === true)
-            setWasReceived(true);
+          if(receivement.received === false)
+            setWasReceived(false);
         } 
       });
 
