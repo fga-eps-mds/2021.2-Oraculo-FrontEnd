@@ -22,6 +22,7 @@ import {
   setStatusRecord,
   getUserByEmail,
   reopenRecord,
+  confirmReceivement,
 } from '../../Services/Axios/processService'
 import { getRecordTagColors } from '../../Services/Axios/tagsService'
 import {
@@ -64,6 +65,8 @@ const ViewRecord = () => {
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
   const [buttonModalReopen, setbuttonModalReopen] = useState(false)
+  const [receivedRecord, setReceivedRecord] = useState(false)
+  const [receivedId, setReceivedId] = useState(0)
 
   useEffect(() => {
     async function fetchRecordData() {
@@ -89,6 +92,14 @@ const ViewRecord = () => {
       setUserName(user.name)
       setUserEmail(user.email)
       setUserSectorNum(user.departments[0].id)
+
+      record.receivements.forEach(receivement => {
+        if(receivement.department_id === user.departments[0].id){
+          setReceivedId(receivement.id);
+          if(receivement.received === true)
+            setReceivedRecord(true);
+        } 
+      });
 
       const responseHR = await getRecordHistory(toast, id)
       const arrInfoForward = await Promise.all(
@@ -121,6 +132,17 @@ const ViewRecord = () => {
     fetchRecordData()
     fetchDepartments()
   }, [buttonModalConfirmForward])
+
+  const confirmReceivementButton = () => {
+    if(receivedRecord === false) {
+      return (
+        <button className="processButton" onClick={handleClickConfirmReceivement}>
+          <b>Confirmar recebimento deste registro</b>
+        </button>
+        )
+    }
+      
+  }
 
   const getDate = () => {
     var data = new Date()
@@ -326,6 +348,16 @@ const ViewRecord = () => {
         </div>
       )
   }
+
+  const handleClickConfirmReceivement = async () => {
+    const receivementInfo = {
+      received_by: userEmail,
+      received_id: receivedId,
+      record_id: id,
+      department_id: userSectorNum,
+    }
+    await confirmReceivement(toast, receivementInfo)
+  }
   return (
     <>
       <HeaderWithButtons />
@@ -425,10 +457,14 @@ const ViewRecord = () => {
           <div className="tagsTest">
             <TagsList id={id} />
           </div>
-
-          <a className="historic" onClick={handleViewHistoric}>
-            Histórico de alterações
-          </a>
+          
+          <div>
+            <button className="processButton" onClick={handleViewHistoric}>
+              <b>Histórico de alterações</b>
+            </button>
+            {confirmReceivementButton()}
+          </div>
+          
         </StyledDivInfoProcess>
         <ModalDoubleCheck
           content="Você tem certeza que quer concluir esse Registro?"
