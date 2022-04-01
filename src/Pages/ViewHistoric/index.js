@@ -24,7 +24,6 @@ function ViewHistoric() {
       const arrayForwardHistory = await Promise.all(
         responseHistory.map((history) => organizeHistory(history))
       );
-      console.log(arrayForwardHistory);
       setForwardHistory(arrayForwardHistory);
     }
 
@@ -37,7 +36,6 @@ function ViewHistoric() {
         const originSecID = history.origin_id;
         const destinationID = history.destination_id;
         const allDepartments = await getDepartments();
-        console.log(allDepartments);
 
         const setor = allDepartments.filter((indice) => {
           return indice.id === destinationID;

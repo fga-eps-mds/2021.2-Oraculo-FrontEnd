@@ -65,7 +65,7 @@ const ViewRecord = () => {
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
   const [buttonModalReopen, setbuttonModalReopen] = useState(false)
-  const [receivedRecord, setReceivedRecord] = useState(false)
+  const [wasReceived, setWasReceived] = useState(false)
   const [receivedId, setReceivedId] = useState(0)
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const ViewRecord = () => {
         if(receivement.department_id === user.departments[0].id){
           setReceivedId(receivement.id);
           if(receivement.received === true)
-            setReceivedRecord(true);
+            setWasReceived(true);
         } 
       });
 
@@ -131,10 +131,10 @@ const ViewRecord = () => {
     fetchTagsData()
     fetchRecordData()
     fetchDepartments()
-  }, [buttonModalConfirmForward])
+  }, [buttonModalConfirmForward, wasReceived])
 
   const confirmReceivementButton = () => {
-    if(receivedRecord === false) {
+    if(wasReceived === false) {
       return (
         <button className="processButton" onClick={handleClickConfirmReceivement}>
           <b>Confirmar recebimento deste registro</b>
@@ -356,7 +356,9 @@ const ViewRecord = () => {
       record_id: id,
       department_id: userSectorNum,
     }
-    await confirmReceivement(toast, receivementInfo)
+    const res = await confirmReceivement(toast, receivementInfo)
+    if(res.status === 200)
+      setWasReceived(true);
   }
   return (
     <>

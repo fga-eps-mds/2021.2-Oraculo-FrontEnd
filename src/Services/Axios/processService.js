@@ -160,7 +160,7 @@ export async function confirmReceivement(toast, receivementInfo) {
       }
     )
     toast.success('Recebimento do registro confirmado!')
-    return response.data
+    return response
   } catch (error) {
     toast.error('Não foi possível confirmar o recebimento do registro!')
     return error
