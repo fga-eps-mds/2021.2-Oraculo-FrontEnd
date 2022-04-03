@@ -62,6 +62,7 @@ const ViewRecord = () => {
   const [link, setLink] = useState('')
   const [keyWord, setKeyWord] = useState('')
   const [buttonModalConfirmForward, setButtonModalConfirmForward] = useState('')
+  const [buttonModalConfirmReceivement, setButtonModalConfirmReceivement] = useState(false)
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
   const [buttonModalReopen, setbuttonModalReopen] = useState(false)
@@ -136,7 +137,7 @@ const ViewRecord = () => {
   const confirmReceivementButton = () => {
     if(wasReceived === false) {
       return (
-        <button className="processButton" onClick={handleClickConfirmReceivement}>
+        <button className="processButton" onClick={async ()=> {setButtonModalConfirmReceivement(true)}}>
           <b>Confirmar recebimento deste registro</b>
         </button>
         )
@@ -215,6 +216,7 @@ const ViewRecord = () => {
   const handleClickModalWhite = () => {
     setButtonModal(false)
     setButtonModalConfirmForward(false)
+    setButtonModalConfirmReceivement(false)
     setbuttonModalReopen(false)
   }
 
@@ -359,6 +361,7 @@ const ViewRecord = () => {
     const res = await confirmReceivement(toast, receivementInfo)
     if(res.status === 200)
       setWasReceived(true);
+    setButtonModalConfirmReceivement(false);
   }
   return (
     <>
@@ -482,6 +485,14 @@ const ViewRecord = () => {
           titleBlueButton="Confirmar"
           titleWhiteButton="Cancelar"
           onClickBlueButton={handleClickModalConfirmForward}
+          onClickWhiteButton={handleClickModalWhite}
+        />
+        <ModalDoubleCheck
+          content="Deseja realmente confirmar o recebimento desse registro?"
+          trigger={buttonModalConfirmReceivement}
+          titleBlueButton="Confirmar"
+          titleWhiteButton="Cancelar"
+          onClickBlueButton={handleClickConfirmReceivement}
           onClickWhiteButton={handleClickModalWhite}
         />
         <ModalReopenProcess
