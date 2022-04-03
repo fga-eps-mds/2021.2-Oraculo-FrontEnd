@@ -50,7 +50,7 @@ function ViewHistoric() {
           setor: setor[0].name,
           setorOrigin: originSection[0].name,
           date: formatedDate(history.createdAt),
-          dateForward: formatedDate(history.updatedAt),
+          dateForward: " ",
           name: user.name,
         };
       } else if (history.closed_by != null) {
@@ -82,8 +82,8 @@ function ViewHistoric() {
         const infoUserDone = await getUserByEmail(history.received_by);
         newForwardHistory = {
           setor: " ",
-          setorOrigin: " ",
-          defaultText: "Registro recebido!",
+          setorOrigin: history.origin_name,
+          defaultText: 'Registro recebido',
           dateForward: " ",
           date: date,
           name: infoUserDone.name,
@@ -94,7 +94,7 @@ function ViewHistoric() {
         newForwardHistory = {
           setor: " ",
           setorOrigin: history.origin_name,
-          defaultText: "Registro criado em: ",
+          defaultText: "Registro criado",
           date: createDate,
           dateForward: " ",
           name: infoUser.name,
@@ -107,14 +107,15 @@ function ViewHistoric() {
   }, [continueFlag]);
   // data formatada
   const formatedDate = (infoDate) => {
-    const dataDone = new Date(infoDate);
-    return (
-      dataDone.getDate() +
-      "/" +
-      (dataDone.getMonth() + 1) +
-      "/" +
-      dataDone.getFullYear()
-    );
+    const dateOptions = {weekday: 'long',
+      year: 'numeric',
+      month: 'long', 
+      day: '2-digit', 
+      hour: '2-digit', 
+      minute: '2-digit'
+    };
+    const dataDone = new Date(infoDate).toLocaleDateString("pt-BR", dateOptions);
+    return dataDone
   };
   return (
     <div>
