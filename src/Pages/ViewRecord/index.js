@@ -22,6 +22,7 @@ import {
   setStatusRecord,
   getUserByEmail,
   reopenRecord,
+  confirmReceivement,
 } from '../../Services/Axios/processService'
 import { getRecordTagColors } from '../../Services/Axios/tagsService'
 import {
@@ -61,9 +62,12 @@ const ViewRecord = () => {
   const [link, setLink] = useState('')
   const [keyWord, setKeyWord] = useState('')
   const [buttonModalConfirmForward, setButtonModalConfirmForward] = useState('')
+  const [buttonModalConfirmReceivement, setButtonModalConfirmReceivement] = useState(false)
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
   const [buttonModalReopen, setbuttonModalReopen] = useState(false)
+  const [wasReceived, setWasReceived] = useState(true)
+  const [receivedId, setReceivedId] = useState(0)
 
   useEffect(() => {
     async function fetchRecordData() {
@@ -89,6 +93,14 @@ const ViewRecord = () => {
       setUserName(user.name)
       setUserEmail(user.email)
       setUserSectorNum(user.departments[0].id)
+
+      record.receivements.forEach(receivement => {
+        if(receivement.department_id === user.departments[0].id){
+          setReceivedId(receivement.id);
+          if(receivement.received === false)
+            setWasReceived(false);
+        } 
+      });
 
       const responseHR = await getRecordHistory(toast, id)
       const arrInfoForward = await Promise.all(
@@ -120,7 +132,18 @@ const ViewRecord = () => {
     fetchTagsData()
     fetchRecordData()
     fetchDepartments()
-  }, [buttonModalConfirmForward])
+  }, [buttonModalConfirmForward, wasReceived])
+
+  const confirmReceivementButton = () => {
+    if(wasReceived === false) {
+      return (
+        <button className="processButton" onClick={async ()=> {setButtonModalConfirmReceivement(true)}}>
+          <b>Confirmar recebimento deste registro</b>
+        </button>
+        )
+    }
+      
+  }
 
   const getDate = () => {
     var data = new Date()
@@ -193,6 +216,7 @@ const ViewRecord = () => {
   const handleClickModalWhite = () => {
     setButtonModal(false)
     setButtonModalConfirmForward(false)
+    setButtonModalConfirmReceivement(false)
     setbuttonModalReopen(false)
   }
 
@@ -326,6 +350,19 @@ const ViewRecord = () => {
         </div>
       )
   }
+
+  const handleClickConfirmReceivement = async () => {
+    const receivementInfo = {
+      received_by: userEmail,
+      received_id: receivedId,
+      record_id: id,
+      department_id: userSectorNum,
+    }
+    const res = await confirmReceivement(toast, receivementInfo)
+    if(res.status === 200)
+      setWasReceived(true);
+    setButtonModalConfirmReceivement(false);
+  }
   return (
     <>
       <HeaderWithButtons />
@@ -425,10 +462,14 @@ const ViewRecord = () => {
           <div className="tagsTest">
             <TagsList id={id} />
           </div>
-
-          <a className="historic" onClick={handleViewHistoric}>
-            Histórico de alterações
-          </a>
+          
+          <div>
+            <button className="processButton" onClick={handleViewHistoric}>
+              <b>Histórico de alterações</b>
+            </button>
+            {confirmReceivementButton()}
+          </div>
+          
         </StyledDivInfoProcess>
         <ModalDoubleCheck
           content="Você tem certeza que quer concluir esse Registro?"
@@ -444,6 +485,14 @@ const ViewRecord = () => {
           titleBlueButton="Confirmar"
           titleWhiteButton="Cancelar"
           onClickBlueButton={handleClickModalConfirmForward}
+          onClickWhiteButton={handleClickModalWhite}
+        />
+        <ModalDoubleCheck
+          content="Deseja realmente confirmar o recebimento desse registro?"
+          trigger={buttonModalConfirmReceivement}
+          titleBlueButton="Confirmar"
+          titleWhiteButton="Cancelar"
+          onClickBlueButton={handleClickConfirmReceivement}
           onClickWhiteButton={handleClickModalWhite}
         />
         <ModalReopenProcess

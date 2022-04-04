@@ -65,15 +65,16 @@ const StyledDivInfoProcess = styled.div`
     display: flex;
   }
 
-  .historic {
+  .processButton {
+    width: 100%;
     border: 2px solid ${colors.white};
     border-radius: ${radius.sizeSm};
     font-size: ${fonts.sizeLg};
-    color: ${colors.white};
     display: block;
     text-align: center;
     margin-top: 2rem;
-    padding: 0.7rem 3rem;
+    padding: 1rem 3rem;
+    cursor: pointer;
   }
 `
 

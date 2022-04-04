@@ -148,6 +148,25 @@ export async function forwardRecordInfo(toast, forwardRecInfo) {
   }
 }
 
+export async function confirmReceivement(toast, receivementInfo) {
+  try {
+    const response = await APIProcess.post(
+      `/confirm-receivement`,
+      {
+        received_by: receivementInfo.received_by,
+        received_id: receivementInfo.received_id,
+        record_id: receivementInfo.record_id,
+        department_id: receivementInfo.department_id,
+      }
+    )
+    toast.success('Recebimento do registro confirmado!')
+    return response
+  } catch (error) {
+    toast.error('Não foi possível confirmar o recebimento do registro!')
+    return error
+  }
+}
+
 export async function getRecordHistory(toast, id) {
   try {
     const response = await APIProcess.get(`/records/${id}/history`)
