@@ -41,7 +41,7 @@ const CreateDepartment = () => {
                     id="email"
                     type="text"
                     required
-                    placeholder="Nome do departamento"
+                    placeholder="Departamento"
                     value={department}
                     onChange={(event) => setDepartment(event.target.value)}
                   />
