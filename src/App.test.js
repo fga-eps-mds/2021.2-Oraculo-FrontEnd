@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CreateDepartment from "./Pages/CreateDepartment";
-import CreateRecord from "./Pages/CreateRecord";
+import CreateUser from "./Pages/CreateUser";
 import App from "./App";
 import MainButton from "./Components/MainButton";
 import HeaderWithButtons from "./Components/HeaderWithButtons";
@@ -26,7 +26,7 @@ test("renders header with buttons component", () => {
 });
 
 describe("CreateDepartment test", () => {
-  test("Should render  Create Department page",async  () => {
+  test("Should render  Create Department page",  () => {
     render(<CreateDepartment/>)
     const cadastrarButton = screen.getByText("Cadastrar")
     const voltarButton = screen.getByText("Voltar")
@@ -35,6 +35,27 @@ describe("CreateDepartment test", () => {
     userEvent.paste(departamentoField, "teste")
 
     expect(departamentoField).toHaveValue('teste')
+    
+    userEvent.click(cadastrarButton)
+    userEvent.click(voltarButton)
+  });
+  
+})
+
+describe("Create User test", () => {
+  test("Should render  Create User page ",  () => {
+    render(<CreateUser/>)
+    const email = screen.getByPlaceholderText("william@pcgo.org.br")
+    const senha = screen.getByPlaceholderText("Senha")
+    const cadastrarButton = screen.getByText("Cadastrar")
+    const voltarButton = screen.getByText("Voltar")
+
+
+   /*  userEvent.paste(nome, "nome") */
+    userEvent.paste(email, "email")
+    userEvent.paste(senha, "senha")
+
+    expect(email).toHaveValue('email')
     
     userEvent.click(cadastrarButton)
     userEvent.click(voltarButton)
