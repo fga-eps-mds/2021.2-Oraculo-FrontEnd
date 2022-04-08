@@ -11,16 +11,23 @@ export const StyledBody = styled.div`
     margin-top: 40px;
     font-size: 22px;
   }
-
-  div {
-    margin-top: 2rem;
-    display: flex;
+  .flex-mt-2 {
+    div {
+      margin-top: 2rem;
+      display: flex;
+    }
   }
 
   .zero-registros {
     text-align: center;
     font-size: 3rem;
   }
+`;
+
+export const DateForm = styled.div`
+  display: flex;
+  margin-bottom: -2rem;
+  align-items: end;
 `;
 
 export const StyledOrganizeButtons = styled.div`
@@ -76,5 +83,25 @@ export const StyledSearchBar = styled.div`
     font-weight: bold;
     font-family: ${fonts.font};
     font-size: ${fonts.sizeXlg};
+  }
+`;
+
+export const StyledDatePicker = styled.input`
+  height: 3rem;
+  padding-left: 0.5rem;
+  background: ${colors.white};
+  margin-right: 1rem;
+  border-radius: ${radius.sizeSm};
+  border: 2px solid ${colors.black};
+  outline: none;
+  display: inline;
+
+  ::placeholder {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: ${fonts.sizeLg};
+    line-height: 33px;
+    opacity: 0.7;
   }
 `;
