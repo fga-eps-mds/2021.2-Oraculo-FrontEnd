@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CreateDepartment from "./Pages/CreateDepartment";
 import CreateUser from "./Pages/CreateUser";
+import HomePage from "./Pages/HomePage"
 import App from "./App";
 import MainButton from "./Components/MainButton";
 import HeaderWithButtons from "./Components/HeaderWithButtons";
@@ -60,9 +61,14 @@ describe("Create User test", () => {
     userEvent.click(cadastrarButton)
     userEvent.click(voltarButton)
   });
-  
+    
 })
 
+describe("HomePage test", () => {
+  test("Should render HomePage ",  () => {
+    render(<HomePage/>)
+  });
+})
 
 test("renders styyledalert buttons component", () => {
   render(<StyledAlertDialog/>)
