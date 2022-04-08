@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import CreateDepartment from "./Pages/CreateDepartment";
 import CreateUser from "./Pages/CreateUser";
 import HomePage from "./Pages/HomePage"
+import RegistrationScreen from "./Pages/RegistrationScreen"
 import App from "./App";
 import MainButton from "./Components/MainButton";
 import HeaderWithButtons from "./Components/HeaderWithButtons";
@@ -67,6 +68,12 @@ describe("Create User test", () => {
 describe("HomePage test", () => {
   test("Should render HomePage ",  () => {
     render(<HomePage/>)
+  });
+})
+
+describe("RegistrationScreen test", () => {
+  test("Should render RegistrationScreen ",  () => {
+    render(<RegistrationScreen/>)
   });
 })
 
