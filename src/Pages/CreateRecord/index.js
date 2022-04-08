@@ -77,7 +77,7 @@ const CreateRecord = () => {
       requester: requester,
       document_type: documentType,
       document_number: documentNumber,
-      document_date: documentDate.toLocaleDateString(),
+      document_date: documentDate.toLocaleDateString('pt-br'),
       description: documentDescription,
       sei_number: seiNumber,
       receipt_form: receiptForm,
