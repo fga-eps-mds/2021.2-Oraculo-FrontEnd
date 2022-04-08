@@ -4,6 +4,7 @@ import CreateDepartment from "./Pages/CreateDepartment";
 import CreateUser from "./Pages/CreateUser";
 import HomePage from "./Pages/HomePage"
 import RegistrationScreen from "./Pages/RegistrationScreen"
+import ViewAllFields from "./Pages/ViewAllFields"
 import App from "./App";
 import MainButton from "./Components/MainButton";
 import HeaderWithButtons from "./Components/HeaderWithButtons";
@@ -76,6 +77,13 @@ describe("RegistrationScreen test", () => {
     render(<RegistrationScreen/>)
   });
 })
+
+describe("ViewAllFields test", () => {
+  test("Should render ViewAllFields ",  () => {
+    render(<ViewAllFields/>)
+  });
+})
+
 
 test("renders styyledalert buttons component", () => {
   render(<StyledAlertDialog/>)
