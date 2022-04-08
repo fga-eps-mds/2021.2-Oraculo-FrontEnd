@@ -84,6 +84,12 @@ describe("ViewAllFields test", () => {
   });
 })
 
+describe("ViewAllTags test", () => {
+  test("Should render ViewAllTags ",  () => {
+    render(<ViewAllFields/>)
+  });
+})
+
 
 test("renders styyledalert buttons component", () => {
   render(<StyledAlertDialog/>)
