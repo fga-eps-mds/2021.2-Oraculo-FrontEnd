@@ -2,9 +2,18 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import HeaderWithButtons from "../../Components/HeaderWithButtons";
 import { getInfoUser } from "../../Services/Axios/profileService";
-import { StyledBody, StyledOrganizeButtons, StyledBigButton } from "./styles";
+import { 
+  StyledBody, 
+  StyledOrganizeButtons, 
+  StyledBigButton, 
+  StyledDatePicker, 
+  DateForm, 
+} from "./styles";
 import Process from "../../Components/Process";
 import Pagination from "../../Components/Pagination/index";
+import DatePicker from 'react-datepicker'
+import pt from 'date-fns/locale/pt-BR'
+import 'react-datepicker/dist/react-datepicker.css'
 import {
   getProcessTotalNumber,
   getProcessByPage,
@@ -17,6 +26,8 @@ const HomePage = (props) => {
   const [process, setProcess] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [processPerPage] = useState(30);
+  const [dateStart, setDateStart] = useState(undefined)
+  const [dateEnd, setDateEnd] = useState(undefined)
   const [allProcesses, setAllProcesses] = useState(0);
   const [department, setDepartment] = useState("");
   const [admin, setAdmin] = useState("");
@@ -36,10 +47,17 @@ const HomePage = (props) => {
     // Fetch user info
     const user = await getInfoUser(toast);
 
+    let dateStartString = undefined;
+    let dateEndString = undefined;
     if (user.levels == undefined) {
       window.location.reload();
       return;
     }
+
+    if(dateStart != undefined) 
+      dateStartString = dateStart.toLocaleDateString('pt-br');
+    if(dateEnd != undefined) 
+      dateEndString = dateEnd.toLocaleDateString('pt-br');
 
     //Check if user is admin
     setAdmin(userType.admin === user.levels[0].id);
@@ -49,13 +67,14 @@ const HomePage = (props) => {
     const temp = await getProcessByPage(currentPage, toast, {
       department_id: user.departments[0].id,
       where,
-    });
+    }, dateStartString, dateEndString);
     setProcess(temp);
+    console.log(temp)
   };
 
   useEffect(() => {
     fetchProcess();
-  }, [currentPage, admin, where]);
+  }, [currentPage, admin, where, dateStart, dateEnd]);
 
   window.onload = function () {
     setAll();
@@ -67,7 +86,46 @@ const HomePage = (props) => {
     <>
       <HeaderWithButtons />
       <StyledBody>
-        <h1>Pesquisar Registro</h1>
+      <h1>Pesquisar Registro</h1>
+      <DateForm>
+      <div>
+        <p>De:</p>
+        <DatePicker
+            id="documentDateInput"
+            selected={dateStart}
+            className="form-div"
+            locale={pt}
+            placeholderText="dd/mm/aaaa"
+            disabledKeyboardNavigation
+            dateFormat="dd/MM/yyyy"
+            strictParsing
+            maxDate={new Date()}
+            onChange={(date) => {
+              setDateStart(date)
+            }}
+            customInput={<StyledDatePicker lang={'pt-BR'} />}
+            />
+        </div>
+        <div>
+        <p>Até:</p>
+        <DatePicker
+          id="documentDateInput"
+          selected={dateEnd}
+          className="form-div"
+          locale={pt}
+          placeholderText="dd/mm/aaaa"
+          disabledKeyboardNavigation
+          dateFormat="dd/MM/yyyy"
+          strictParsing
+          maxDate={new Date()}
+          onChange={(date) => {
+            setDateEnd(date)
+          }}
+          customInput={<StyledDatePicker lang={'pt-BR'} />}
+        />
+        </div>
+        </DateForm>
+        <div className="flex-mt-2">
         {/* Fazer botão atualizar com registros */}
         <RenderFilters handleWhere={{ where, setWhere }} />
         <h1>Departamento: {department}</h1>
@@ -95,6 +153,7 @@ const HomePage = (props) => {
           totalProcess={allProcesses}
           paginate={paginate}
         />
+        </div>
       </StyledBody>
     </>
   );
