@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import HeaderWithButtons from "../../Components/HeaderWithButtons";
 import { getInfoUser } from "../../Services/Axios/profileService";
+import MainButton from "../../Components/MainButton";
 import { 
   StyledBody, 
   StyledOrganizeButtons, 
@@ -19,6 +20,8 @@ import {
   getProcessByPage,
 } from "../../Services/Axios/processService";
 import RenderFilters from "../../Components/Filters";
+
+import * as XLSX from 'xlsx/xlsx.mjs'
 
 const HomePage = (props) => {
   // Setar estados de processos e paginação
@@ -69,8 +72,28 @@ const HomePage = (props) => {
       where,
     }, dateStartString, dateEndString);
     setProcess(temp);
-    console.log(temp)
   };
+
+  const handleExportTable = () => {
+    const filtredInfo = process.map((el) => {
+      return {
+        "Id": el.id, 
+        "Nº do registro": el.register_number,
+        "Cidade": el.city,
+        "Estado": el.state,
+        "Solicitante": el.requester,
+        "Tipo de Documento": el.document_type,
+        "Data de Inclusão": el.inclusion_date,
+        "Descrição do Documento": el.description,
+        "Nº do SEI": el.sei_number,
+        "Informação de contato": el.contact_info,
+    }
+    });
+    const worksheet = XLSX.utils.json_to_sheet(filtredInfo);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet);
+    XLSX.writeFile(workbook, "tabela_de_registros.xlsx");
+  }
 
   useEffect(() => {
     fetchProcess();
@@ -126,33 +149,34 @@ const HomePage = (props) => {
         </div>
         </DateForm>
         <div className="flex-mt-2">
-        {/* Fazer botão atualizar com registros */}
-        <RenderFilters handleWhere={{ where, setWhere }} />
-        <h1>Departamento: {department}</h1>
-        <StyledOrganizeButtons>
-          <StyledBigButton>Nº de Registro</StyledBigButton>
-          <StyledBigButton>Cidade</StyledBigButton>
-          <StyledBigButton>UF</StyledBigButton>
-          <StyledBigButton>Solicitante</StyledBigButton>
-          <StyledBigButton>Inclusão</StyledBigButton>
-          <StyledBigButton>Nº do SEI</StyledBigButton>
-          <StyledBigButton>Tag</StyledBigButton>
-          <StyledBigButton />
-        </StyledOrganizeButtons>
-        {/* fazer registro atualizar com SearchTerm */}
-        {process.length > 0 ? (
-          <Process process={process} />
-        ) : (
-          <h1 class="zero-registros">
-            Não há registros cadastrados no sistema
-          </h1>
-        )}
-        {/* paginar registros */}
-        <Pagination
-          processPerPage={processPerPage}
-          totalProcess={allProcesses}
-          paginate={paginate}
-        />
+          {/* Fazer botão atualizar com registros */}
+          <RenderFilters handleWhere={{ where, setWhere }} />
+          <h1>Departamento: {department}</h1>
+          <MainButton  onClick={handleExportTable} title={"Exportar tabela"} />
+          <StyledOrganizeButtons>
+            <StyledBigButton>Nº de Registro</StyledBigButton>
+            <StyledBigButton>Cidade</StyledBigButton>
+            <StyledBigButton>UF</StyledBigButton>
+            <StyledBigButton>Solicitante</StyledBigButton>
+            <StyledBigButton>Inclusão</StyledBigButton>
+            <StyledBigButton>Nº do SEI</StyledBigButton>
+            <StyledBigButton>Tag</StyledBigButton>
+            <StyledBigButton />
+          </StyledOrganizeButtons>
+          {/* fazer registro atualizar com SearchTerm */}
+          {process.length > 0 ? (
+            <Process process={process} />
+          ) : (
+            <h1 class="zero-registros">
+              Não há registros cadastrados no sistema
+            </h1>
+          )}
+          {/* paginar registros */}
+          <Pagination
+            processPerPage={processPerPage}
+            totalProcess={allProcesses}
+            paginate={paginate}
+          />
         </div>
       </StyledBody>
     </>
