@@ -211,7 +211,6 @@ const ViewRecord = () => {
   }
 
   const handleClickModalConfirmForward = async () => {
-    if (reasonForward) {
       const forwardRecInfo = {
         id: id,
         forwarded_by: userEmail,
@@ -221,7 +220,6 @@ const ViewRecord = () => {
       }
       await forwardRecordInfo(toast, forwardRecInfo)
       setButtonModalConfirmForward(false)
-    } else toast.error('É obrigatório inserir o motivo')
   }
 
   const handleClickModalWhite = () => {
