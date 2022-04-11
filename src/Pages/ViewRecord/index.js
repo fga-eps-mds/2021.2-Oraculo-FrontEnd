@@ -30,7 +30,10 @@ import {
   getInfoUser,
 } from '../../Services/Axios/profileService'
 import { useParams } from 'react-router'
-import { ModalDoubleCheck, ModalReasonProcess } from '../../Components/ModalDoubleCheck'
+import {
+  ModalDoubleCheck,
+  ModalReasonProcess,
+} from '../../Components/ModalDoubleCheck'
 import { TagsList } from './tags'
 import { ModalReopenProcess } from '../../Components/ModalDoubleCheck'
 
@@ -63,7 +66,8 @@ const ViewRecord = () => {
   const [link, setLink] = useState('')
   const [keyWord, setKeyWord] = useState('')
   const [buttonModalConfirmForward, setButtonModalConfirmForward] = useState('')
-  const [buttonModalConfirmReceivement, setButtonModalConfirmReceivement] = useState(false)
+  const [buttonModalConfirmReceivement, setButtonModalConfirmReceivement] =
+    useState(false)
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
   const [buttonModalReopen, setbuttonModalReopen] = useState(false)
@@ -95,13 +99,12 @@ const ViewRecord = () => {
       setUserEmail(user.email)
       setUserSectorNum(user.departments[0].id)
 
-      record.receivements.forEach(receivement => {
+      record.receivements.forEach((receivement) => {
         if (receivement.department_id === user.departments[0].id) {
-          setReceivedId(receivement.id);
-          if (receivement.received === false)
-            setWasReceived(false);
+          setReceivedId(receivement.id)
+          if (receivement.received === false) setWasReceived(false)
         }
-      });
+      })
 
       const responseHR = await getRecordHistory(toast, id)
       const arrInfoForward = await Promise.all(
@@ -138,12 +141,16 @@ const ViewRecord = () => {
   const confirmReceivementButton = () => {
     if (wasReceived === false) {
       return (
-        <button className="processButton" onClick={async () => { setButtonModalConfirmReceivement(true) }}>
+        <button
+          className="processButton"
+          onClick={async () => {
+            setButtonModalConfirmReceivement(true)
+          }}
+        >
           <b>Confirmar recebimento deste registro</b>
         </button>
       )
     }
-
   }
 
   const getDate = () => {
@@ -196,7 +203,7 @@ const ViewRecord = () => {
 
       document.querySelector('.forwardIcon').style.display = 'flex'
       setForwardData(infoRecord)
-    } else toast.error('É obrigatorio inserir o motivo')
+    } else toast.error('É obrigatório inserir a descrição')
   }
 
   const handleForward = async () => {
@@ -214,7 +221,7 @@ const ViewRecord = () => {
       }
       await forwardRecordInfo(toast, forwardRecInfo)
       setButtonModalConfirmForward(false)
-    } else toast.error('É obrigatorio inserir o motivo')
+    } else toast.error('É obrigatório inserir o motivo')
   }
 
   const handleClickModalWhite = () => {
@@ -254,7 +261,6 @@ const ViewRecord = () => {
     document.querySelector('.forwardIcon').style.display = 'none'
     setForwardData(infoRecord)
   }
-
 
   const formatedDate = (infoDate) => {
     const dataDone = new Date(infoDate)
@@ -364,9 +370,8 @@ const ViewRecord = () => {
       department_id: userSectorNum,
     }
     const res = await confirmReceivement(toast, receivementInfo)
-    if (res.status === 200)
-      setWasReceived(true);
-    setButtonModalConfirmReceivement(false);
+    if (res.status === 200) setWasReceived(true)
+    setButtonModalConfirmReceivement(false)
   }
   return (
     <>
@@ -462,8 +467,6 @@ const ViewRecord = () => {
             departments={departments}
             onChangeOpt={(event) => setDepartment(event.target.value)}
           />
-          <span>Descrição do encaminhamento:</span>
-          <p>{reasonForward === '' ? 'Não houve encaminhamento.' : reasonForward}</p>
 
           <span>Tags:</span>
           <div className="tagsTest">
@@ -476,7 +479,6 @@ const ViewRecord = () => {
             </button>
             {confirmReceivementButton()}
           </div>
-
         </StyledDivInfoProcess>
         <ModalDoubleCheck
           content="Você tem certeza que quer concluir esse Registro?"
