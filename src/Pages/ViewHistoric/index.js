@@ -49,6 +49,9 @@ function ViewHistoric() {
         newForwardHistory = {
           setor: setor[0].name,
           setorOrigin: originSection[0].name,
+          defaultText: "Registro encaminhado",
+          reason: "Motivo:",
+          reasonText: history.reason,
           date: formatedDate(history.createdAt),
           dateForward: " ",
           name: user.name,
