@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import HeaderWithButtons from "../../Components/HeaderWithButtons";
 import { getInfoUser } from "../../Services/Axios/profileService";
 import MainButton from "../../Components/MainButton";
+import { exportRegisterTable } from "../../Services/exportRegisterTable";
 import { 
   StyledBody, 
   StyledOrganizeButtons, 
@@ -20,8 +21,6 @@ import {
   getProcessByPage,
 } from "../../Services/Axios/processService";
 import RenderFilters from "../../Components/Filters";
-
-import * as XLSX from 'xlsx/xlsx.mjs'
 
 const HomePage = (props) => {
   // Setar estados de processos e paginação
@@ -75,24 +74,7 @@ const HomePage = (props) => {
   };
 
   const handleExportTable = () => {
-    const filtredInfo = process.map((el) => {
-      return {
-        "Id": el.id, 
-        "Nº do registro": el.register_number,
-        "Cidade": el.city,
-        "Estado": el.state,
-        "Solicitante": el.requester,
-        "Tipo de Documento": el.document_type,
-        "Data de Inclusão": el.inclusion_date,
-        "Descrição do Documento": el.description,
-        "Nº do SEI": el.sei_number,
-        "Informação de contato": el.contact_info,
-    }
-    });
-    const worksheet = XLSX.utils.json_to_sheet(filtredInfo);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet);
-    XLSX.writeFile(workbook, "tabela_de_registros.xlsx");
+    exportRegisterTable(process)
   }
 
   useEffect(() => {
