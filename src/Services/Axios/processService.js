@@ -138,6 +138,7 @@ export async function forwardRecordInfo(toast, forwardRecInfo) {
         forwarded_by: forwardRecInfo.forwarded_by,
         origin_id: forwardRecInfo.origin_id,
         destination_id: forwardRecInfo.destination_id,
+        reason: forwardRecInfo.reason,
       }
     )
     toast.success('Registro encaminhado com sucesso!')

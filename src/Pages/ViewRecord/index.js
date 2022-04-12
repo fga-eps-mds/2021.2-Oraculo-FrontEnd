@@ -30,7 +30,10 @@ import {
   getInfoUser,
 } from '../../Services/Axios/profileService'
 import { useParams } from 'react-router'
-import { ModalDoubleCheck } from '../../Components/ModalDoubleCheck'
+import {
+  ModalDoubleCheck,
+  ModalReasonProcess,
+} from '../../Components/ModalDoubleCheck'
 import { TagsList } from './tags'
 import { ModalReopenProcess } from '../../Components/ModalDoubleCheck'
 
@@ -58,11 +61,13 @@ const ViewRecord = () => {
   const [userSectorNum, setUserSectorNum] = useState('')
   const [tags, setTags] = useState([])
   const [reason, setReason] = useState('')
+  const [reasonForward, setReasonForward] = useState('')
   const [physicalObject, setPhysicalObject] = useState(false)
   const [link, setLink] = useState('')
   const [keyWord, setKeyWord] = useState('')
   const [buttonModalConfirmForward, setButtonModalConfirmForward] = useState('')
-  const [buttonModalConfirmReceivement, setButtonModalConfirmReceivement] = useState(false)
+  const [buttonModalConfirmReceivement, setButtonModalConfirmReceivement] =
+    useState(false)
   const [buttonModal, setButtonModal] = useState('')
   const [buttonDone, setButtonDone] = useState(false)
   const [buttonModalReopen, setbuttonModalReopen] = useState(false)
@@ -94,13 +99,12 @@ const ViewRecord = () => {
       setUserEmail(user.email)
       setUserSectorNum(user.departments[0].id)
 
-      record.receivements.forEach(receivement => {
-        if(receivement.department_id === user.departments[0].id){
-          setReceivedId(receivement.id);
-          if(receivement.received === false)
-            setWasReceived(false);
-        } 
-      });
+      record.receivements.forEach((receivement) => {
+        if (receivement.department_id === user.departments[0].id) {
+          setReceivedId(receivement.id)
+          if (receivement.received === false) setWasReceived(false)
+        }
+      })
 
       const responseHR = await getRecordHistory(toast, id)
       const arrInfoForward = await Promise.all(
@@ -135,14 +139,18 @@ const ViewRecord = () => {
   }, [buttonModalConfirmForward, wasReceived])
 
   const confirmReceivementButton = () => {
-    if(wasReceived === false) {
+    if (wasReceived === false) {
       return (
-        <button className="processButton" onClick={async ()=> {setButtonModalConfirmReceivement(true)}}>
+        <button
+          className="processButton"
+          onClick={async () => {
+            setButtonModalConfirmReceivement(true)
+          }}
+        >
           <b>Confirmar recebimento deste registro</b>
         </button>
-        )
+      )
     }
-      
   }
 
   const getDate = () => {
@@ -195,7 +203,7 @@ const ViewRecord = () => {
 
       document.querySelector('.forwardIcon').style.display = 'flex'
       setForwardData(infoRecord)
-    } else toast.error('É obrigatorio inserir o motivo')
+    } else toast.error('É obrigatório inserir a descrição')
   }
 
   const handleForward = async () => {
@@ -203,14 +211,15 @@ const ViewRecord = () => {
   }
 
   const handleClickModalConfirmForward = async () => {
-    const forwardRecInfo = {
-      id: id,
-      forwarded_by: userEmail,
-      origin_id: userSectorNum,
-      destination_id: department,
-    }
-    await forwardRecordInfo(toast, forwardRecInfo)
-    setButtonModalConfirmForward(false)
+      const forwardRecInfo = {
+        id: id,
+        forwarded_by: userEmail,
+        origin_id: userSectorNum,
+        destination_id: department,
+        reason: reasonForward,
+      }
+      await forwardRecordInfo(toast, forwardRecInfo)
+      setButtonModalConfirmForward(false)
   }
 
   const handleClickModalWhite = () => {
@@ -225,7 +234,7 @@ const ViewRecord = () => {
     const infoRecord = {
       id: id,
       closed_by: userEmail,
-      reason: ' ',
+      reason: reasonForward,
     }
 
     //send request to close record
@@ -359,9 +368,8 @@ const ViewRecord = () => {
       department_id: userSectorNum,
     }
     const res = await confirmReceivement(toast, receivementInfo)
-    if(res.status === 200)
-      setWasReceived(true);
-    setButtonModalConfirmReceivement(false);
+    if (res.status === 200) setWasReceived(true)
+    setButtonModalConfirmReceivement(false)
   }
   return (
     <>
@@ -462,14 +470,13 @@ const ViewRecord = () => {
           <div className="tagsTest">
             <TagsList id={id} />
           </div>
-          
+
           <div>
             <button className="processButton" onClick={handleViewHistoric}>
               <b>Histórico de alterações</b>
             </button>
             {confirmReceivementButton()}
           </div>
-          
         </StyledDivInfoProcess>
         <ModalDoubleCheck
           content="Você tem certeza que quer concluir esse Registro?"
@@ -479,13 +486,14 @@ const ViewRecord = () => {
           onClickBlueButton={handleClickModalBlue}
           onClickWhiteButton={handleClickModalWhite}
         />
-        <ModalDoubleCheck
+        <ModalReasonProcess
           content="Deseja realmente encaminhar esse registro?"
           trigger={buttonModalConfirmForward}
           titleBlueButton="Confirmar"
           titleWhiteButton="Cancelar"
           onClickBlueButton={handleClickModalConfirmForward}
           onClickWhiteButton={handleClickModalWhite}
+          onChange={(event) => setReasonForward(event.target.value)}
         />
         <ModalDoubleCheck
           content="Deseja realmente confirmar o recebimento desse registro?"
