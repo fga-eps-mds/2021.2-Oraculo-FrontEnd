@@ -25,6 +25,11 @@
     "web-vitals": "^1.0.1",
     "xlsx": "^0.18.5"
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
