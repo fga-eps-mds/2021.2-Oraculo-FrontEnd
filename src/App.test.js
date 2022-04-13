@@ -1,8 +1,4 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import CreateDepartment from "./Pages/CreateDepartment";
-import CreateUser from "./Pages/CreateUser";
-import HomePage from "./Pages/HomePage"
+import { render } from "@testing-library/react";
 import RegistrationScreen from "./Pages/RegistrationScreen"
 import ViewAllFields from "./Pages/ViewAllFields"
 import App from "./App";
@@ -28,49 +24,6 @@ test("renders header with buttons component", () => {
   render(<HeaderWithButtons/>);
 });
 
-describe("CreateDepartment test", () => {
-  test("Should render  Create Department page",  () => {
-    render(<CreateDepartment/>)
-    const cadastrarButton = screen.getByText("Cadastrar")
-    const voltarButton = screen.getByText("Voltar")
-    const departamentoField = screen.getByPlaceholderText("Departamento")
-
-    userEvent.paste(departamentoField, "teste")
-
-    expect(departamentoField).toHaveValue('teste')
-    
-    userEvent.click(cadastrarButton)
-    userEvent.click(voltarButton)
-  });
-  
-})
-
-describe("Create User test", () => {
-  test("Should render  Create User page ",  () => {
-    render(<CreateUser/>)
-    const email = screen.getByPlaceholderText("william@pcgo.org.br")
-    const senha = screen.getByPlaceholderText("Senha")
-    const cadastrarButton = screen.getByText("Cadastrar")
-    const voltarButton = screen.getByText("Voltar")
-
-
-   /*  userEvent.paste(nome, "nome") */
-    userEvent.paste(email, "email")
-    userEvent.paste(senha, "senha")
-
-    expect(email).toHaveValue('email')
-    
-    userEvent.click(cadastrarButton)
-    userEvent.click(voltarButton)
-  });
-    
-})
-
-describe("HomePage test", () => {
-  test("Should render HomePage ",  () => {
-    render(<HomePage/>)
-  });
-})
 
 describe("RegistrationScreen test", () => {
   test("Should render RegistrationScreen ",  () => {
