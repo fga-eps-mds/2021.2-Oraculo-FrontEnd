@@ -49,6 +49,9 @@ function ViewHistoric() {
         newForwardHistory = {
           setor: setor[0].name,
           setorOrigin: originSection[0].name,
+          defaultText: "Registro encaminhado",
+          reason: "Descrição:",
+          reasonText: history.reason,
           date: formatedDate(history.createdAt),
           dateForward: " ",
           name: user.name,
@@ -77,13 +80,13 @@ function ViewHistoric() {
           dateForward: " ",
           name: infoUserDone.name,
         };
-      }else if (history.received_by != null) {
+      } else if (history.received_by != null) {
         const date = formatedDate(history.created_at);
         const infoUserDone = await getUserByEmail(history.received_by);
         newForwardHistory = {
           setor: " ",
           setorOrigin: history.origin_name,
-          defaultText: 'Registro recebido',
+          defaultText: "Registro recebido",
           dateForward: " ",
           date: date,
           name: infoUserDone.name,
@@ -107,15 +110,19 @@ function ViewHistoric() {
   }, [continueFlag]);
   // data formatada
   const formatedDate = (infoDate) => {
-    const dateOptions = {weekday: 'long',
-      year: 'numeric',
-      month: 'long', 
-      day: '2-digit', 
-      hour: '2-digit', 
-      minute: '2-digit'
+    const dateOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
     };
-    const dataDone = new Date(infoDate).toLocaleDateString("pt-BR", dateOptions);
-    return dataDone
+    const dataDone = new Date(infoDate).toLocaleDateString(
+      "pt-BR",
+      dateOptions
+    );
+    return dataDone;
   };
   return (
     <div>

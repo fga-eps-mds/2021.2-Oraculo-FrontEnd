@@ -54,9 +54,11 @@ export async function setStatusRecord(id, situation_record, toast) {
     toast.error('Erro ao tentar concluir registro')
   }
 }
-export async function getProcessByPage(page, toast, body) {
+export async function getProcessByPage(page, toast, body, startDate, endDate) {
+  let url = encodeURI(`/records/page/${page}?start=${startDate}&end=${endDate}`);
+  console.log(url)
   try {
-    const response = await APIProcess.post(`/records/page/${page}`, {
+    const response = await APIProcess.post(`/records/page/${page}?start=${startDate}&end=${endDate}`, {
       ...body,
     })
 
@@ -138,6 +140,7 @@ export async function forwardRecordInfo(toast, forwardRecInfo) {
         forwarded_by: forwardRecInfo.forwarded_by,
         origin_id: forwardRecInfo.origin_id,
         destination_id: forwardRecInfo.destination_id,
+        reason: forwardRecInfo.reason,
       }
     )
     toast.success('Registro encaminhado com sucesso!')
