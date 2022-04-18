@@ -19,6 +19,7 @@ import EditRecord from "./Pages/EditRecord";
 import EditDepartment from "./Pages/EditDepartment";
 import ViewAllTags from "./Pages/ViewAllTags";
 import ViewHistoric from "./Pages/ViewHistoric";
+import ResetPassword from "./Pages/ResetPassword";
 
 const PrivateRoutes = ({ component: Component, ...prop }) => (
   <Route
@@ -68,6 +69,7 @@ const Routes = () => (
         path="/editar-departamento/:id"
         component={() => <EditDepartment />}
       />
+      <Route path="/esqueci-senha" component={() => < ResetPassword/>} />
       <PrivateRoutes path="/visualizar-tags" component={() => <ViewAllTags />} />
       <PrivateRoutes path="/historico-registro/:id" component={() => <ViewHistoric />} />
       <Route exact path="/" component={() => <LoginScreen />} />
