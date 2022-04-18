@@ -17,25 +17,30 @@ import { isAuthenticated, login } from "../../Auth/Auth";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-class ResetPassword extends React.Component{
+class RecoveryPassword extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            email: ''
+            token: '',
+            password: ''
         };
     }
 
     async handleClick(event) {
-        const email = this.state.email ;
-        const result = await sendEmailToRecoverPassword(email, toast);
+        const passwordReq = {token: this.state.token, password: this.state.password} ;
+        const result = await passwordRecovery(passwordReq, toast);
         if(result){
-            this.props.history.push("/recuperar-senha")
+            this.props.history.push("/login")
         }
       }
 
-    setEmail(newMail) {
-        this.setState({ email: newMail });
+    setToken(newToken) {
+        this.setState({ token: newToken });
       }
+
+    setPassword(newPassword) {
+        this.setState({ password: newPassword });
+    }
 
     render (){
         return (
@@ -45,12 +50,23 @@ class ResetPassword extends React.Component{
                 <form>
                     <img src={Logo} alt="Logo" />
                     <LoginInput
-                    idInput="email"
-                    nameInput="email"
-                    placeholderInput="Digite seu e-mail cadastrado no sistema"
-                    inputType="email"
-                    valueInput={this.state.email}
-                    onChangeInput={(event) => this.setEmail(event.target.value)}
+                    idInput="token"
+                    nameInput="token"
+                    placeholderInput="Digite o token enviado no email"
+                    inputType="token"
+                    valueInput={this.state.token}
+                    onChangeInput={(event) => this.setToken(event.target.value)}
+                    >
+                    <FaUserCircle />
+                
+                    </LoginInput>
+                    <LoginInput
+                    idInput="password"
+                    nameInput="password"
+                    placeholderInput="Digite a nova senha"
+                    inputType="password"
+                    valueInput={this.state.password}
+                    onChangeInput={(event) => this.setPassword(event.target.value)}
                     >
                     <FaUserCircle />
                 
@@ -73,4 +89,4 @@ class ResetPassword extends React.Component{
 }
 
 
-export default withRouter(ResetPassword)
+export default withRouter(RecoveryPassword)

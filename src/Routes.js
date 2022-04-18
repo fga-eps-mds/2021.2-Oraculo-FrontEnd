@@ -70,6 +70,7 @@ const Routes = () => (
         component={() => <EditDepartment />}
       />
       <Route path="/esqueci-senha" component={() => < ResetPassword/>} />
+      <Route path="/recuperar-senha" component={() => <RecoveryPassword/>} />
       <PrivateRoutes path="/visualizar-tags" component={() => <ViewAllTags />} />
       <PrivateRoutes path="/historico-registro/:id" component={() => <ViewHistoric />} />
       <Route exact path="/" component={() => <LoginScreen />} />
