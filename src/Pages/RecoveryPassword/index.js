@@ -1,21 +1,13 @@
 import React from 'react'
-import { FaLock, FaUserCircle } from 'react-icons/fa'
-import toast, { Toaster } from 'react-hot-toast'
+import { FaUserCircle } from 'react-icons/fa'
+import toast from 'react-hot-toast'
 import Logo from '../../Assets/logo-dark.svg'
 import Header from '../../Components/Header'
 import LoginInput from '../../Components/LoginInput/index'
 import MainButton from '../../Components/MainButton'
 import { FormLogin, StyledDiv } from './styles'
-import jwt_decode from 'jwt-decode'
-import {
-  getInfoUser,
-  getToken,
-  passwordRecovery,
-  verifyToken,
-} from '../../Services/Axios/profileService'
-import { isAuthenticated, login } from '../../Auth/Auth'
+import { passwordRecovery } from '../../Services/Axios/profileService'
 import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
 
 class RecoveryPassword extends React.Component {
   constructor(props) {
@@ -26,7 +18,7 @@ class RecoveryPassword extends React.Component {
     }
   }
 
-  async handleClick(event) {
+  async handleClick() {
     const passwordReq = {
       token: this.state.token,
       password: this.state.password,
