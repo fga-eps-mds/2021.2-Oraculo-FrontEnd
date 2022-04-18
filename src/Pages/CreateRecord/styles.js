@@ -60,7 +60,6 @@ export const StyledForms = styled.div`
   form {
     margin-left: auto;
     .form-div {
-      box-sizing: border-box;
       h1 {
         text-align: left;
         font-family: ${fonts.font};
