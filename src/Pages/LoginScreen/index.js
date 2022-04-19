@@ -14,7 +14,7 @@ import {
   verifyToken,
 } from "../../Services/Axios/profileService";
 import { isAuthenticated, login } from "../../Auth/Auth";
-import { withRouter } from "react-router";
+import { Redirect, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 class LoginScreen extends React.Component {
@@ -60,6 +60,7 @@ class LoginScreen extends React.Component {
       this.props.history.push("/tela-inicial");
     }
   }
+  
 
   render() {
     return (
@@ -92,7 +93,7 @@ class LoginScreen extends React.Component {
               <Link
                 to="/esqueci-senha"
                 onClick={() => {
-                  alert("Estamos trabalhando nisso");
+                  //<Redirect push to="/esqueci-senha"/>
                 }}
               >
                 Esqueci minha senha
