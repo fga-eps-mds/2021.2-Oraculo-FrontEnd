@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
-import { FaPlus, FaRegFileAlt } from 'react-icons/fa'
-import HeaderWithButtons from '../../Components/HeaderWithButtons'
-import { history } from '../../history'
-import { federativeUnits } from '../../Constants/federativeUnits'
+import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { FaPlus, FaRegFileAlt } from "react-icons/fa";
+import HeaderWithButtons from "../../Components/HeaderWithButtons";
+import { history } from "../../history";
+import { federativeUnits } from "../../Constants/federativeUnits";
 
 import {
   createRecord,
   findRecordWithSei,
-} from '../../Services/Axios/processService'
-import GenericBlueButton from '../../Components/GenericBlueButton'
-import GenericRedButton from '../../Components/GenericRedButton'
-import { getInfoUser } from '../../Services/Axios/profileService'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import pt from 'date-fns/locale/pt-BR'
-import AddTagDialog, { TagModal } from '../../Components/AddTagDialog';
+} from "../../Services/Axios/processService";
+import GenericBlueButton from "../../Components/GenericBlueButton";
+import GenericRedButton from "../../Components/GenericRedButton";
+import { getInfoUser } from "../../Services/Axios/profileService";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import pt from "date-fns/locale/pt-BR";
+import AddTagDialog, { TagModal } from "../../Components/AddTagDialog";
 
 import {
   CircleDiv,
@@ -29,43 +29,44 @@ import {
   StyledProcessDiv,
   StyledTitle,
   StyledWhiteRectangle,
-} from './styles'
+} from "./styles";
 
 const CreateRecord = () => {
-  const [city, setCity] = useState('')
-  const [state, setState] = useState('')
-  const [requester, setRequester] = useState('')
-  const [documentType, setDocumentType] = useState('')
-  const [documentNumber, setDocumentNumber] = useState('')
-  const [documentDate, setDocumentDate] = useState(new Date())
-  const [documentDescription, setDocumentDescription] = useState('')
-  const [seiNumber, setSeiNumber] = useState('')
-  const [receiptForm, setReceiptForm] = useState('')
-  const [contactInfo, setContactInfo] = useState('')
-  const [createdBy, setCreatedBy] = useState('')
-  const [showTagModal, setShowTagModal] = useState(false)
-  const [tags, setTags] = useState({})
-  const [physicalObject, setPhysicalObject] = useState(false)
-  const [link, setLink] = useState('')
-  const [keyWord, setKeyWord] = useState('')
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [requester, setRequester] = useState("");
+  const [documentType, setDocumentType] = useState("");
+  const [documentNumber, setDocumentNumber] = useState("");
+  const [documentDate, setDocumentDate] = useState(new Date());
+  const [deadline, setDeadline] = useState("");
+  const [documentDescription, setDocumentDescription] = useState("");
+  const [seiNumber, setSeiNumber] = useState("");
+  const [receiptForm, setReceiptForm] = useState("");
+  const [contactInfo, setContactInfo] = useState("");
+  const [createdBy, setCreatedBy] = useState("");
+  const [showTagModal, setShowTagModal] = useState(false);
+  const [tags, setTags] = useState({});
+  const [physicalObject, setPhysicalObject] = useState(false);
+  const [link, setLink] = useState("");
+  const [keyWord, setKeyWord] = useState("");
 
   useEffect(() => {
     async function getUser() {
-      const user = await getInfoUser(toast)
+      const user = await getInfoUser(toast);
       if (!user) {
-        history.push('/login')
+        history.push("/login");
       }
-      setCreatedBy(user.email)
+      setCreatedBy(user.email);
       // setRequester(user.name)
       // setContactInfo(user.email)
     }
 
-    getUser()
-  }, [])
+    getUser();
+  }, []);
 
   async function checkRecordSei(sei) {
     // verifica se já existe um registro com o número do SEI especificado
-    return findRecordWithSei(sei)
+    return findRecordWithSei(sei);
   }
 
   async function handleClick() {
@@ -77,7 +78,8 @@ const CreateRecord = () => {
       requester: requester,
       document_type: documentType,
       document_number: documentNumber,
-      document_date: documentDate.toLocaleDateString('pt-br'),
+      document_date: documentDate.toLocaleDateString("pt-br"),
+      deadline: deadline.toLocaleDateString("pt-br"),
       description: documentDescription,
       sei_number: seiNumber,
       receipt_form: receiptForm,
@@ -89,22 +91,23 @@ const CreateRecord = () => {
       have_physical_object: physicalObject,
       link: link,
       key_words: keyWord,
-    }
+    };
     // envia request para criar registro no banco
-    await createRecord(record, toast)
+    await createRecord(record, toast);
 
-    setCity('')
-    setState('')
-    setRequester('')
-    setDocumentType('')
-    setDocumentNumber('')
-    setDocumentDate('')
-    setDocumentDescription('')
-    setSeiNumber('')
-    setReceiptForm('')
-    setContactInfo('')
-    setLink('')
-    setKeyWord('')
+    setCity("");
+    setState("");
+    setRequester("");
+    setDocumentType("");
+    setDocumentNumber("");
+    setDocumentDate("");
+    setDeadline("");
+    setDocumentDescription("");
+    setSeiNumber("");
+    setReceiptForm("");
+    setContactInfo("");
+    setLink("");
+    setKeyWord("");
   }
 
   return (
@@ -133,20 +136,20 @@ const CreateRecord = () => {
                 <form
                   onSubmit={async (event) => {
                     //prevent default to not reload page
-                    event.preventDefault()
+                    event.preventDefault();
                     // if sei number is empty, do not access
                     // to sei number verification
-                    if (seiNumber === '') {
+                    if (seiNumber === "") {
                       toast((t) => (
-                        <span style={{ textAlign: 'center' }}>
-                          <p style={{ fontSize: '18px' }}>
+                        <span style={{ textAlign: "center" }}>
+                          <p style={{ fontSize: "18px" }}>
                             N° de SEI vazio. Deseja continuar?
                           </p>
                           <GenericBlueButton
                             title="Prosseguir"
                             onClick={() => {
-                              handleClick()
-                              toast.dismiss(t.id)
+                              handleClick();
+                              toast.dismiss(t.id);
                             }}
                           />
                           <p></p>
@@ -155,29 +158,29 @@ const CreateRecord = () => {
                             onClick={() => toast.dismiss(t.id)}
                           />
                         </span>
-                      ))
+                      ));
                     } else {
-                      const [data, status] = await checkRecordSei(seiNumber)
+                      const [data, status] = await checkRecordSei(seiNumber);
 
                       if (status === 400) {
                         toast.error(
-                          'Erro ao buscar número do sei no banco de dados'
-                        )
-                        return
+                          "Erro ao buscar número do sei no banco de dados"
+                        );
+                        return;
                       }
                       if (status === 200 && data.found === true) {
                         // Exibe mensagem de alerta
                         toast((t) => (
-                          <span style={{ textAlign: 'center' }}>
+                          <span style={{ textAlign: "center" }}>
                             <p>Um registro com o SEI </p>
-                            <p style={{ fontSize: '18px' }}>
+                            <p style={{ fontSize: "18px" }}>
                               {seiNumber} já existe. Deseja continuar?
                             </p>
                             <GenericBlueButton
                               title="Prosseguir"
                               onClick={() => {
-                                handleClick()
-                                toast.dismiss(t.id)
+                                handleClick();
+                                toast.dismiss(t.id);
                               }}
                             ></GenericBlueButton>
                             <p></p>
@@ -186,9 +189,9 @@ const CreateRecord = () => {
                               onClick={() => toast.dismiss(t.id)}
                             ></GenericRedButton>
                           </span>
-                        ))
+                        ));
                       } else {
-                        handleClick()
+                        handleClick();
                       }
                     }
                   }}
@@ -255,7 +258,6 @@ const CreateRecord = () => {
                   <div className="form-div">
                     <h1>Data do documento</h1>
                   </div>
-
                   <DatePicker
                     id="documentDateInput"
                     selected={documentDate}
@@ -267,10 +269,30 @@ const CreateRecord = () => {
                     strictParsing
                     maxDate={new Date()}
                     onChange={(date) => {
-                      setDocumentDate(date)
+                      setDocumentDate(date);
                     }}
-                    customInput={<StyledDatePicker lang={'pt-BR'} />}
+                    customInput={<StyledDatePicker lang={"pt-BR"} />}
                   />
+
+                  <div className="form-div">
+                    <h1>Prazo para conclusão (opcional)</h1>
+                  </div>
+                  <DatePicker
+                    id="deadlineInput"
+                    selected={deadline}
+                    className="form-div"
+                    locale={pt}
+                    placeholderText="dd/mm/aaaa"
+                    disabledKeyboardNavigation
+                    showTimeSelect
+                    dateFormat="Pp"
+                    strictParsing
+                    onChange={(date) => {
+                      setDeadline(date);
+                    }}
+                    customInput={<StyledDatePicker lang={"pt-BR"} />}
+                  />
+
                   <div className="form-div">
                     <h1>Descrição do documento</h1>
                     <input
@@ -320,21 +342,21 @@ const CreateRecord = () => {
                     <input
                       type="checkbox"
                       onChange={(event) => {
-                        setPhysicalObject(event.target.checked)
+                        setPhysicalObject(event.target.checked);
                       }}
                     />
                   </div>
                   <div className="form-div">
                     <h1>Tags</h1>
                     <button type="button" onClick={() => setShowTagModal(true)}>
-                      <div style={{ display: 'flex' }}>
+                      <div style={{ display: "flex" }}>
                         {Object.values(tags).map(
                           ({ color, checked }) =>
                             checked && (
                               <CircleDiv
                                 style={{
                                   backgroundColor: color,
-                                  marginRight: '0.5rem',
+                                  marginRight: "0.5rem",
                                 }}
                               />
                             )
@@ -385,7 +407,7 @@ const CreateRecord = () => {
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default CreateRecord
+export default CreateRecord;
