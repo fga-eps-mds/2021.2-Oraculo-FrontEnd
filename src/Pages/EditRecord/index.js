@@ -93,9 +93,7 @@ const EditRecord = () => {
     originalRecord.document_date
       ? setDocumentDate(convertDate(originalRecord.document_date))
       : setDocumentDate("-");
-    originalRecord.deadline
-      ? setDeadline(Date.parse(originalRecord.deadline))
-      : setDeadline("-");
+    originalRecord.deadline && setDeadline(Date.parse(originalRecord.deadline));
     originalRecord.description
       ? setDocumentDescription(originalRecord.description)
       : setDocumentDescription("-");
