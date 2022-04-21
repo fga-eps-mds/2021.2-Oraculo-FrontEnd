@@ -4,18 +4,18 @@ import HeaderWithButtons from "../../Components/HeaderWithButtons";
 import { getInfoUser } from "../../Services/Axios/profileService";
 import MainButton from "../../Components/MainButton";
 import { exportRegisterTable } from "../../Services/exportRegisterTable";
-import { 
-  StyledBody, 
-  StyledOrganizeButtons, 
-  StyledBigButton, 
-  StyledDatePicker, 
-  DateForm, 
+import {
+  StyledBody,
+  StyledOrganizeButtons,
+  StyledBigButton,
+  StyledDatePicker,
+  DateForm,
 } from "./styles";
 import Process from "../../Components/Process";
 import Pagination from "../../Components/Pagination/index";
-import DatePicker from 'react-datepicker'
-import pt from 'date-fns/locale/pt-BR'
-import 'react-datepicker/dist/react-datepicker.css'
+import DatePicker from "react-datepicker";
+import pt from "date-fns/locale/pt-BR";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   getProcessTotalNumber,
   getProcessByPage,
@@ -28,8 +28,8 @@ const HomePage = (props) => {
   const [process, setProcess] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [processPerPage] = useState(30);
-  const [dateStart, setDateStart] = useState(undefined)
-  const [dateEnd, setDateEnd] = useState(undefined)
+  const [dateStart, setDateStart] = useState(undefined);
+  const [dateEnd, setDateEnd] = useState(undefined);
   const [allProcesses, setAllProcesses] = useState(0);
   const [department, setDepartment] = useState("");
   const [admin, setAdmin] = useState("");
@@ -56,26 +56,32 @@ const HomePage = (props) => {
       return;
     }
 
-    if(dateStart != undefined) 
-      dateStartString = dateStart.toLocaleDateString('pt-br');
-    if(dateEnd != undefined) 
-      dateEndString = dateEnd.toLocaleDateString('pt-br');
+    if (dateStart != undefined)
+      dateStartString = dateStart.toLocaleDateString("pt-br");
+    if (dateEnd != undefined)
+      dateEndString = dateEnd.toLocaleDateString("pt-br");
 
     //Check if user is admin
     setAdmin(userType.admin === user.levels[0].id);
     //Set the name of user's department
     setDepartment(user.departments[0].name);
 
-    const temp = await getProcessByPage(currentPage, toast, {
-      department_id: user.departments[0].id,
-      where,
-    }, dateStartString, dateEndString);
+    const temp = await getProcessByPage(
+      currentPage,
+      toast,
+      {
+        department_id: user.departments[0].id,
+        where,
+      },
+      dateStartString,
+      dateEndString
+    );
     setProcess(temp);
   };
 
   const handleExportTable = () => {
-    exportRegisterTable(process)
-  }
+    exportRegisterTable(process);
+  };
 
   useEffect(() => {
     fetchProcess();
@@ -91,50 +97,48 @@ const HomePage = (props) => {
     <>
       <HeaderWithButtons />
       <StyledBody>
-      <h1>Pesquisar Registro</h1>
-      <DateForm>
-      <div>
-        <p>De:</p>
-        <DatePicker
-            id="documentDateInput"
-            selected={dateStart}
-            className="form-div"
-            locale={pt}
-            placeholderText="dd/mm/aaaa"
-            disabledKeyboardNavigation
-            dateFormat="dd/MM/yyyy"
-            strictParsing
-            maxDate={new Date()}
-            onChange={(date) => {
-              setDateStart(date)
-            }}
-            customInput={<StyledDatePicker lang={'pt-BR'} />}
+        <h1>Pesquisar Registro</h1>
+        <DateForm>
+          <div>
+            <p>De:</p>
+            <DatePicker
+              id="documentDateInput"
+              selected={dateStart}
+              className="form-div"
+              locale={pt}
+              placeholderText="dd/mm/aaaa"
+              disabledKeyboardNavigation
+              dateFormat="dd/MM/yyyy"
+              strictParsing
+              onChange={(date) => {
+                setDateStart(date);
+              }}
+              customInput={<StyledDatePicker lang={"pt-BR"} />}
             />
-        </div>
-        <div>
-        <p>Até:</p>
-        <DatePicker
-          id="documentDateInput"
-          selected={dateEnd}
-          className="form-div"
-          locale={pt}
-          placeholderText="dd/mm/aaaa"
-          disabledKeyboardNavigation
-          dateFormat="dd/MM/yyyy"
-          strictParsing
-          maxDate={new Date()}
-          onChange={(date) => {
-            setDateEnd(date)
-          }}
-          customInput={<StyledDatePicker lang={'pt-BR'} />}
-        />
-        </div>
+          </div>
+          <div>
+            <p>Até:</p>
+            <DatePicker
+              id="documentDateInput"
+              selected={dateEnd}
+              className="form-div"
+              locale={pt}
+              placeholderText="dd/mm/aaaa"
+              disabledKeyboardNavigation
+              dateFormat="dd/MM/yyyy"
+              strictParsing
+              onChange={(date) => {
+                setDateEnd(date);
+              }}
+              customInput={<StyledDatePicker lang={"pt-BR"} />}
+            />
+          </div>
         </DateForm>
         <div className="flex-mt-2">
           {/* Fazer botão atualizar com registros */}
           <RenderFilters handleWhere={{ where, setWhere }} />
           <h1>Departamento: {department}</h1>
-          <MainButton  onClick={handleExportTable} title={"Exportar tabela"} />
+          <MainButton onClick={handleExportTable} title={"Exportar tabela"} />
           <StyledOrganizeButtons>
             <StyledBigButton>Nº de Registro</StyledBigButton>
             <StyledBigButton>Cidade</StyledBigButton>
