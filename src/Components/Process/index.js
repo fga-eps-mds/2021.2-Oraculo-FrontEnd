@@ -37,6 +37,8 @@ const Process = ({ process }) => {
             post.sei_number === "" ? "-" : seiNumberLimit(post.sei_number)
           }
           registerId={post.id}
+          situation={post.situation}
+          deadline={post.deadline}
         />
       ))}
     </StyledListGroup>
