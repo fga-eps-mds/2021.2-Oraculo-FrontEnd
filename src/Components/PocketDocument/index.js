@@ -49,6 +49,8 @@ const PocketDocument = ({
 
   const compareDate = () => {
     const day = 24 * 60 * 60 * 1000;
+    if (msDifferenceTime < 0)
+      return <BsClockHistory style={{ color: "gray" }} size={40} />;
     if (msDifferenceTime < day)
       return <BsClockHistory style={{ color: "red" }} size={40} />;
     if (msDifferenceTime < 3 * day && msDifferenceTime > day)
