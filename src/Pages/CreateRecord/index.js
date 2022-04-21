@@ -284,11 +284,10 @@ const CreateRecord = () => {
                     locale={pt}
                     placeholderText="dd/mm/aaaa"
                     disabledKeyboardNavigation
-                    showTimeSelect
-                    dateFormat="Pp"
+                    dateFormat="P"
                     strictParsing
                     onChange={(date) => {
-                      setDeadline(date);
+                      setDeadline(new Date(date.toDateString() + " 23:59:59"));
                     }}
                     customInput={<StyledDatePicker lang={"pt-BR"} />}
                   />
