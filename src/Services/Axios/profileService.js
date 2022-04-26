@@ -292,49 +292,67 @@ export async function editDepartmentById(departmentInfo, id, toast) {
   }
 }
 
-export async function sendEmailToRecoverPassword(email, toast){
+export async function sendEmailToRecoverPassword(email, toast) {
   try {
-    const response = await APIProfile.post('/password-recovery', {
-      email: email
-    })
+    const response = await APIProfile.post("/password-recovery", {
+      email: email,
+    });
 
     toast.success((t) => (
       <span style={{ textAlign: "center" }}>
-        <p>E-mail enviado, copie o token contido nele para recuperar sua senha</p>
+        <p>
+          E-mail enviado, copie o token contido nele para recuperar sua senha
+        </p>
       </span>
     ));
-    return response.data
-  }catch(err) {
+    return response.data;
+  } catch (err) {
     const status = err.response?.status;
 
     if (status === 400) {
       toast.error("Não existe nenhum usuário com esse email");
     } else {
-      toast.error("Não foi possivel enviar o email. Tente novamente mais tarde.");
+      toast.error(
+        "Não foi possivel enviar o email. Tente novamente mais tarde."
+      );
     }
 
     return null;
   }
 }
 
-export async function passwordRecovery(passwordReq, toast){
-  try{
-    const response = await APIProfile.put('/password-recovery', {
+export async function getUserById(id, toast) {
+  try {
+    const response = await APIProfile.get(`/user/${id}`, {
+      headers: { "X-Access-Token": getToken() },
+    });
+
+    return response.data;
+  } catch (error) {
+    toast.error("Algo deu errado ao buscar as informações do usuário");
+  }
+}
+
+export async function passwordRecovery(passwordReq, toast) {
+  try {
+    const response = await APIProfile.put("/password-recovery", {
       token: passwordReq.token,
-      password: passwordReq.password
-    })
+      password: passwordReq.password,
+    });
     toast.success((t) => (
       <span style={{ textAlign: "center" }}>
         <p>Senha recuperada com sucesso</p>
       </span>
     ));
-    return response.data
-  }catch(err){
+    return response.data;
+  } catch (err) {
     const status = err.response?.status;
     if (status === 400) {
       toast.error("Token incorreto");
     } else {
-      toast.error("Não foi possível realizar essa ação. Tente novamente mais tarde.");
+      toast.error(
+        "Não foi possível realizar essa ação. Tente novamente mais tarde."
+      );
     }
   }
 }
