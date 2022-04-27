@@ -69,6 +69,11 @@ const CreateRecord = () => {
     return findRecordWithSei(sei);
   }
 
+  const handleInput = (e) => {
+    console.log(e.target.value);
+    e.target.value = ("" + e.target.value).toUpperCase();
+  };
+
   async function handleClick() {
     // Body request to post in
     // record api
@@ -204,6 +209,7 @@ const CreateRecord = () => {
                       placeholder="Cidade (Obrigatório)"
                       required
                       onChange={(event) => setCity(event.target.value)}
+                      onInput={handleInput}
                       value={city}
                     />
                   </div>
@@ -213,6 +219,7 @@ const CreateRecord = () => {
                       required
                       placeholder="Selecione a UF"
                       onChange={(event) => setState(event.target.value)}
+                      onInput={handleInput}
                     >
                       <>
                         <option value="">Selecione a UF</option>
@@ -230,6 +237,7 @@ const CreateRecord = () => {
                       placeholder="Solicitante (Obrigatório)"
                       required
                       onChange={(event) => setRequester(event.target.value)}
+                      onInput={handleInput}
                       value={requester}
                     />
                   </div>
@@ -240,6 +248,7 @@ const CreateRecord = () => {
                       type="text"
                       placeholder="Ofício, Despacho ..."
                       onChange={(event) => setDocumentType(event.target.value)}
+                      onInput={handleInput}
                       value={documentType}
                     />
                   </div>
@@ -302,6 +311,7 @@ const CreateRecord = () => {
                       onChange={(event) =>
                         setDocumentDescription(event.target.value)
                       }
+                      onInput={handleInput}
                       value={documentDescription}
                     />
                   </div>
@@ -323,6 +333,7 @@ const CreateRecord = () => {
                       placeholder="Física, E-mail, SEI (Obrigatório)"
                       required
                       onChange={(event) => setReceiptForm(event.target.value)}
+                      onInput={handleInput}
                       value={receiptForm}
                     />
                   </div>
@@ -381,6 +392,7 @@ const CreateRecord = () => {
                       type="text"
                       placeholder="Insira as palavras chave separadas por vírgula"
                       onChange={(event) => setKeyWord(event.target.value)}
+                      onInput={handleInput}
                       value={keyWord}
                     />
                   </div>

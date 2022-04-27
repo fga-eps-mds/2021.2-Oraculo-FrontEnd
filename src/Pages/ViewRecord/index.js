@@ -38,7 +38,7 @@ import { TagsList } from "./tags";
 import { ModalReopenProcess } from "../../Components/ModalDoubleCheck";
 
 const ViewRecord = () => {
-  const naoCadastrada = "Informação não cadastrada";
+  const naoCadastrada = "Informação não cadastrada".toLocaleUpperCase();
   const { id } = useParams();
   const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([]);
@@ -432,7 +432,7 @@ const ViewRecord = () => {
             </div>
             <div>
               <h3>Acompanha objeto físico:&nbsp;</h3>
-              <h3 id="physicalObject">{physicalObject ? "Sim" : "Não"}</h3>
+              <h3 id="physicalObject">{physicalObject ? "SIM" : "NÃO"}</h3>
             </div>
             {hasLink()}
             <div class="description">

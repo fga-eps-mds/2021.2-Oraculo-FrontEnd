@@ -136,9 +136,13 @@ const EditRecord = () => {
       have_physical_object: physicalObject,
       key_words: keyWord,
     };
-    console.log(record.deadline);
     await editRecord(record, id, toast);
   }
+
+  const handleInput = (e) => {
+    console.log(e.target.value);
+    e.target.value = ("" + e.target.value).toUpperCase();
+  };
 
   return (
     <>
@@ -172,6 +176,7 @@ const EditRecord = () => {
                       type="text"
                       placeholder="Cidade (Obrigatório)"
                       onChange={(event) => setCity(event.target.value)}
+                      onInput={handleInput}
                       value={city}
                     />
                   </div>
@@ -200,6 +205,7 @@ const EditRecord = () => {
                       type="text"
                       placeholder="Solicitante (Obrigatório)"
                       onChange={(event) => setRequester(event.target.value)}
+                      onInput={handleInput}
                       value={requester}
                     />
                   </div>
@@ -211,6 +217,7 @@ const EditRecord = () => {
                       type="text"
                       placeholder="Oficio, Despacho ..."
                       onChange={(event) => setDocumentType(event.target.value)}
+                      onInput={handleInput}
                       value={documentType}
                     />
                   </div>
@@ -274,6 +281,7 @@ const EditRecord = () => {
                       onChange={(event) =>
                         setDocumentDescription(event.target.value)
                       }
+                      onInput={handleInput}
                       value={documentDescription}
                     />
                   </div>
@@ -296,6 +304,7 @@ const EditRecord = () => {
                       type="text"
                       placeholder="Física, E-mail, SEI (Obrigatório)"
                       onChange={(event) => setReceiptForm(event.target.value)}
+                      onInput={handleInput}
                       value={receiptForm}
                     />
                   </div>
@@ -361,6 +370,7 @@ const EditRecord = () => {
                       type="text"
                       placeholder="Insira as palavras chave separadas por vírgula"
                       onChange={(event) => setKeyWord(event.target.value)}
+                      onInput={handleInput}
                       value={keyWord}
                     />
                   </div>
