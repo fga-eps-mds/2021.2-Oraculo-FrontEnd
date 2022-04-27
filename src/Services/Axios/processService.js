@@ -55,12 +55,15 @@ export async function setStatusRecord(id, situation_record, toast) {
   }
 }
 export async function getProcessByPage(page, toast, body, startDate, endDate) {
-  let url = encodeURI(`/records/page/${page}?start=${startDate}&end=${endDate}`);
+  let url = encodeURI(`/records/page/${page}?start=${startDate}&end=${endDate}`)
   console.log(url)
   try {
-    const response = await APIProcess.post(`/records/page/${page}?start=${startDate}&end=${endDate}`, {
-      ...body,
-    })
+    const response = await APIProcess.post(
+      `/records/page/${page}?start=${startDate}&end=${endDate}`,
+      {
+        ...body,
+      }
+    )
 
     return response.data
   } catch (error) {
@@ -153,15 +156,12 @@ export async function forwardRecordInfo(toast, forwardRecInfo) {
 
 export async function confirmReceivement(toast, receivementInfo) {
   try {
-    const response = await APIProcess.post(
-      `/confirm-receivement`,
-      {
-        received_by: receivementInfo.received_by,
-        received_id: receivementInfo.received_id,
-        record_id: receivementInfo.record_id,
-        department_id: receivementInfo.department_id,
-      }
-    )
+    const response = await APIProcess.post(`/confirm-receivement`, {
+      received_by: receivementInfo.received_by,
+      received_id: receivementInfo.received_id,
+      record_id: receivementInfo.record_id,
+      department_id: receivementInfo.department_id,
+    })
     toast.success('Recebimento do registro confirmado!')
     return response
   } catch (error) {
@@ -301,6 +301,16 @@ export async function editTag(id, name, color, toast) {
     return response.data
   } catch (error) {
     toast.error('Não foi possível editar esta tag, tente novamente mais tarde')
+    return error
+  }
+}
+
+export async function getUserInfo(email, toast) {
+  try {
+    const response = await APIProcess.get(`/get-user-info?email=${email}`)
+    return response.data
+  } catch (error) {
+    toast.error('Algo deu errado ao buscar o usuário')
     return error
   }
 }

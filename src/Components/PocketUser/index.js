@@ -1,5 +1,5 @@
-import React from "react";
-import { StyledListGroup, StyledBigDiv, StyledText } from "./style";
+import React from 'react'
+import { StyledListGroup, StyledBigDiv, StyledText } from './style'
 
 const PocketUser = ({ user, searchTerm }) => {
   return (
@@ -7,21 +7,29 @@ const PocketUser = ({ user, searchTerm }) => {
       {user
         .filter((val) => {
           if (
-            searchTerm === "" ||
+            searchTerm === '' ||
             val.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             val.email.toLowerCase().includes(searchTerm.toLowerCase())
           ) {
-            return val;
+            return val
           }
         })
         .map((singleUser) => (
-          <StyledBigDiv>
-            <StyledText>{singleUser.name}</StyledText>
-            <StyledText>{singleUser.email}</StyledText>
-          </StyledBigDiv>
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              window.location.href = `/ver-usuario/${singleUser.id}`
+            }}
+            class="registerNumber"
+          >
+            <StyledBigDiv>
+              <StyledText>{singleUser.name}</StyledText>
+              <StyledText>{singleUser.email}</StyledText>
+            </StyledBigDiv>
+          </button>
         ))}
     </StyledListGroup>
-  );
-};
+  )
+}
 
-export default PocketUser;
+export default PocketUser
