@@ -53,6 +53,7 @@ const ViewRecord = () => {
   const [receiptForm, setReceiptForm] = useState("");
   const [seiNumber, setSeiNumber] = useState("");
   const [documentDate, setDocumentDate] = useState("");
+  const [deadline, setDeadline] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
   const [documentContactInfo, setDocumentContactInfo] = useState("");
   const [documentType, setDocumentType] = useState("");
@@ -83,6 +84,8 @@ const ViewRecord = () => {
       setRegisterNumber(record.register_number);
       setSeiNumber(record.sei_number);
       setDocumentDate(record.document_date);
+      record.deadline &&
+        setDeadline(new Date(record.deadline).toLocaleDateString("pt-br"));
       setRequester(record.requester);
       setCity(record.city);
       setState(record.state);
@@ -416,6 +419,10 @@ const ViewRecord = () => {
             <div>
               <h3>Data do documento:&nbsp;</h3>
               <h3>{documentDate ? documentDate : naoCadastrada}</h3>
+            </div>
+            <div>
+              <h3>Prazo para conclusão:&nbsp;</h3>
+              <h3>{deadline ? deadline : naoCadastrada}</h3>
             </div>
             <div>
               <h3>Informações de contato:&nbsp;</h3>

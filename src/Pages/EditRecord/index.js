@@ -54,6 +54,7 @@ const EditRecord = () => {
   const [documentType, setDocumentType] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
   const [documentDate, setDocumentDate] = useState("");
+  const [deadline, setDeadline] = useState("");
   const [documentDescription, setDocumentDescription] = useState("");
   const [seiNumber, setSeiNumber] = useState("");
   const [receiptForm, setReceiptForm] = useState("");
@@ -92,6 +93,7 @@ const EditRecord = () => {
     originalRecord.document_date
       ? setDocumentDate(convertDate(originalRecord.document_date))
       : setDocumentDate("-");
+    originalRecord.deadline && setDeadline(Date.parse(originalRecord.deadline));
     originalRecord.description
       ? setDocumentDescription(originalRecord.description)
       : setDocumentDescription("-");
@@ -122,6 +124,7 @@ const EditRecord = () => {
       document_number: documentNumber,
       // Convert Date() to dd/mm/yyyy
       document_date: documentDate.toLocaleDateString(),
+      deadline: deadline,
       description: documentDescription,
       sei_number: seiNumber,
       receipt_form: receiptForm,
@@ -133,7 +136,6 @@ const EditRecord = () => {
       have_physical_object: physicalObject,
       key_words: keyWord,
     };
-
     await editRecord(record, id, toast);
   }
 
@@ -237,7 +239,7 @@ const EditRecord = () => {
                   </div>
 
                   <DatePicker
-                    id="documentDateInput"
+                    id="deadlineInput"
                     selected={documentDate}
                     class="form-div"
                     locale={pt}
@@ -250,6 +252,25 @@ const EditRecord = () => {
                     }}
                     customInput={<StyledDatePicker />}
                   />
+
+                  <div className="form-div">
+                    <h1>Prazo para conclusão (opcional)</h1>
+                  </div>
+                  <DatePicker
+                    id="deadlineInput"
+                    selected={deadline}
+                    className="form-div"
+                    locale={pt}
+                    placeholderText="dd/mm/aaaa"
+                    disabledKeyboardNavigation
+                    dateFormat="P"
+                    strictParsing
+                    onChange={(date) => {
+                      setDeadline(new Date(date.toDateString() + " 23:59:59"));
+                    }}
+                    customInput={<StyledDatePicker lang={"pt-BR"} />}
+                  />
+
                   <div class="form-div">
                     <h1>Descrição do documento</h1>
                     <input

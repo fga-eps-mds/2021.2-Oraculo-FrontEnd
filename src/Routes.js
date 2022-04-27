@@ -21,7 +21,7 @@ import ViewAllTags from "./Pages/ViewAllTags";
 import ViewHistoric from "./Pages/ViewHistoric";
 import ResetPassword from "./Pages/ResetPassword";
 import RecoveryPassword from "./Pages/RecoveryPassword";
-
+import ViewUser from "./Pages/ViewUser";
 const PrivateRoutes = ({ component: Component, ...prop }) => (
   <Route
     {...prop}
@@ -108,6 +108,7 @@ const Routes = () => (
         path="/historico-registro/:id"
         component={() => <ViewHistoric />}
       />
+      <PrivateRoutes path="/ver-usuario/:id" component={() => <ViewUser />} />
       <Route exact path="/" component={() => <LoginScreen />} />
     </Switch>
   </BrowserRouter>
