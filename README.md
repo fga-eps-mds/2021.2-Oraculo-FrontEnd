@@ -46,7 +46,9 @@ export REACT_APP_TAGS_BASE_URL="$REACT_APP_RECORDS_BASE_URL"
 ```
 
 **Importante**: as variáveis `REACT_APP_PROFILE_BASE_URL` e `REACT_APP_RECORDS_BASE_URL` deverão possuir
-a URL completa (host e porta) dos microsserviços de profile e de registros, respectivamente.
+a URL completa (host e porta) dos microsserviços de profile e de registros, respectivamente. 
+
+A URL de TAGS deve ser a mesma URL de RECORDS
 
 Esta aplicação faz conexão e é dependente das APIs para funcionar corretamente. As APIs correspondentes são:
 
