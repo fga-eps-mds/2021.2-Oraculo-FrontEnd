@@ -30,7 +30,9 @@ const Process = ({ process }) => {
             post.register_number === "" ? "-" : post.register_number
           }
           requester={post.requester === "" ? "-" : charLimits(post.requester)}
-          inclusionDate={post.document_date === "" ? "-" : post.document_date}
+          inclusionDate={new Date(post.inclusion_date).toLocaleDateString(
+            "pt-br"
+          )}
           city={post.city === "" ? "-" : charLimits(post.city)}
           state={post.state === "" ? "-" : post.state}
           seiNumber={
