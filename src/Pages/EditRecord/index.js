@@ -93,7 +93,9 @@ const EditRecord = () => {
     originalRecord.document_date
       ? setDocumentDate(convertDate(originalRecord.document_date))
       : setDocumentDate("-");
-    originalRecord.deadline && setDeadline(Date.parse(originalRecord.deadline));
+    originalRecord.deadline
+      ? setDeadline(originalRecord.deadline)
+      : setDeadline("");
     originalRecord.description
       ? setDocumentDescription(originalRecord.description)
       : setDocumentDescription("-");
@@ -115,6 +117,7 @@ const EditRecord = () => {
   };
 
   async function handleClick(event) {
+    console.log(deadline);
     const record = {
       inclusion_date: inclusionDate,
       city: city,
@@ -239,7 +242,7 @@ const EditRecord = () => {
                   </div>
 
                   <DatePicker
-                    id="deadlineInput"
+                    id="documentDateInput"
                     selected={documentDate}
                     class="form-div"
                     locale={pt}
@@ -258,7 +261,7 @@ const EditRecord = () => {
                   </div>
                   <DatePicker
                     id="deadlineInput"
-                    selected={deadline}
+                    selected={Date.parse(deadline)}
                     className="form-div"
                     locale={pt}
                     placeholderText="dd/mm/aaaa"
