@@ -296,7 +296,9 @@ const CreateRecord = () => {
                     dateFormat="P"
                     strictParsing
                     onChange={(date) => {
-                      setDeadline(new Date(date.toDateString() + " 23:59:59"));
+                      setDeadline(
+                        date ? new Date(date.toDateString() + " 23:59:59") : ""
+                      );
                     }}
                     customInput={<StyledDatePicker lang={"pt-BR"} />}
                   />
